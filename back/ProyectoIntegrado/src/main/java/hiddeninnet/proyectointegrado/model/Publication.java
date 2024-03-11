@@ -16,6 +16,10 @@ public class Publication implements Serializable {
     User user;
     ////////////////////////////////////////////////////
 
+    @ManyToOne
+    @JoinColumn(name="bidder_id")
+    private Bidder bidder;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

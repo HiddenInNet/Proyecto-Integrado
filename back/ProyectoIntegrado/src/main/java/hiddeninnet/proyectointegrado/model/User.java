@@ -38,6 +38,9 @@ public class User implements Serializable {
     @Column(name = "image", unique = false, nullable = true)
     private byte[] image;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Bidder bidder;
+
     @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Publication> publications = new HashSet<>();
 

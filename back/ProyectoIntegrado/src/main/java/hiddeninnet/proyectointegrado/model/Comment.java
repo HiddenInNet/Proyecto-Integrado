@@ -11,9 +11,13 @@ public class Comment implements Serializable {
 
     // Class Publication
     @ManyToOne
-    @JoinColumn(name="id_publication")
+    @JoinColumn(name = "id_publication")
     Publication publication;
     /////////////////////////////////////////
+
+    @ManyToOne
+    @JoinColumn(name = "bidder_id")
+    private Bidder bidder;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

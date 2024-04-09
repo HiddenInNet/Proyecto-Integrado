@@ -1,6 +1,8 @@
-package hiddeninnet.proyectointegrado.model;
+package com.ms.motorsphere_api.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
@@ -8,6 +10,11 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
+@Builder
 @Entity
 @Table(name = "bidders")
 public class Bidder implements Serializable{
@@ -20,15 +27,6 @@ public class Bidder implements Serializable{
     @JoinColumn(name = "user_id")
     private User user;
 
-    // Unidireccional
-    public void setUser(User user) {
-        this.user = user;
-    }
-
-    public void removeUser() {
-        this.user = null;
-    }
-
     @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Event> events = new HashSet<>();
 
@@ -38,42 +36,6 @@ public class Bidder implements Serializable{
 
     @Column(name = "checker", unique = false, nullable = true)
     private boolean checker;
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Set<Event> getEvents() {
-        return events;
-    }
-
-    public void setEvents(Set<Event> events) {
-        this.events = events;
-    }
-
-    public User getUser() {
-        return user;
-    }
-
-    public Date getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(Date creationDate) {
-        this.creationDate = creationDate;
-    }
-
-    public boolean isChecker() {
-        return checker;
-    }
-
-    public void setChecker(boolean checker) {
-        this.checker = checker;
-    }
 
     // HELPERS
     public void addEvent(Event event) {

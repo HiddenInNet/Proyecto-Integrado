@@ -1,6 +1,9 @@
 package hiddeninnet.proyectointegrado.model;
 
 import jakarta.persistence.*;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
@@ -8,6 +11,7 @@ import java.util.Set;
 
 @Entity
 @Table(name = "users")
+@EntityListeners(AuditingEntityListener.class)
 public class User implements Serializable {
 
     @Id
@@ -15,7 +19,7 @@ public class User implements Serializable {
     private Long id;
 
     @Column(name = "username", unique = true, nullable = false)
-    private String userName;
+    private String username;
 
     @Column(name = "password", unique = false, nullable = false)
     private String password;
@@ -29,20 +33,31 @@ public class User implements Serializable {
     @Column(name = "last_name", unique = false, nullable = true)
     private String lastName;
 
-    @Column(name = "date", unique = false, nullable = true)
-    private Date date;
+    @Column(name = "birth_date", unique = false, nullable = true)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date birthDate;
+
+    @Column(name = "phone", unique = false, nullable = true)
+    private String phone;
+
+    @Column(name = "profile_create_date", unique = false, nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    private Date profileDate;
 
     @Column(name = "biography", unique = false, nullable = true)
     private String biography;
 
-    @Column(name = "image", unique = false, nullable = true)
-    private byte[] image;
+    @Column(name = "profile_image", unique = false, nullable = true)
+    private byte[] profileImage;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Bidder bidder;
-
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Publication> publications = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Comment> comments = new HashSet<>();
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<UserEvent> userEvents = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -52,12 +67,12 @@ public class User implements Serializable {
         this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
@@ -92,6 +107,22 @@ public class User implements Serializable {
         this.lastName = lastName;
     }
 
+    public Date getBirthDate() {
+        return birthDate;
+    }
+
+    public void setBirthDate(Date birthDate) {
+        this.birthDate = birthDate;
+    }
+
+    public Date getProfileDate() {
+        return profileDate;
+    }
+
+    public void setProfileDate(Date profileDate) {
+        this.profileDate = profileDate;
+    }
+
     public String getBiography() {
         return biography;
     }
@@ -100,12 +131,28 @@ public class User implements Serializable {
         this.biography = biography;
     }
 
-    public byte[] getImage() {
-        return image;
+    public byte[] getProfileImage() {
+        return profileImage;
     }
 
-    public void setImage(byte[] image) {
-        this.image = image;
+    public void setProfileImage(byte[] profileImage) {
+        this.profileImage = profileImage;
+    }
+
+    public Set<Publication> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(Set<Publication> publications) {
+        this.publications = publications;
+    }
+
+    public Set<UserEvent> getUserEvents() {
+        return userEvents;
+    }
+
+    public void setUserEvents(Set<UserEvent> userEvents) {
+        this.userEvents = userEvents;
     }
 
     // HELPERS
@@ -117,5 +164,15 @@ public class User implements Serializable {
     public void removePublication(Publication publication) {
         this.publications.remove(publication);
         publication.setUser(null);
+    }
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setUser(this);
+    }
+
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
+        comment.setUser(null);
     }
 }

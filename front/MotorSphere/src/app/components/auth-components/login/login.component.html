@@ -1,0 +1,35 @@
+<section class="w-full flex background-gradient bg-silver rounded-lg border-4 justify-between mt-4 p-20">
+    <div class="flex items-center justify-center w-1/2 dark:bg-gray-950">
+        <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 md:mx-20 py-6 md:w-full">
+            <h1 class="text-2xl font-bold text-center mb-4 dark:text-gray-200">Welcome Back!</h1>
+            <form action="#" #form="ngForm" (ngSubmit)="onSubmit(form.value)">
+                <div class="mb-4">
+                    <label for="email"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nombre de usuario</label>
+                    <input type="text" id="username" [(ngModel)]="loginForm.username" #username="ngModel" name="username"
+                        class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="motorsphere123" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password"
+                        class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Contraseña</label>
+                    <input type="password" id="password" [(ngModel)]="loginForm.password" #password="ngModel" name="password"
+                        class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+                        placeholder="Password" required>
+                    <div class="flex justify-between md:w-full">
+                        <a href="#"
+                            class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">¿Has
+                            olvidado la contraseña?</a>
+                        <a href="#"
+                            class="text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Registrate</a>
+                    </div>
+                </div>
+                <button type="submit"
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
+            </form>
+        </div>
+    </div>
+    <div class="flex items-center justify-center w-1/2">
+        <img class="size-60 anima" src="../../../../assets/media/login.png" alt="">
+    </div>
+</section>

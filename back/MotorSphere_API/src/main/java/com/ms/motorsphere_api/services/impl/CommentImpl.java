@@ -2,9 +2,8 @@ package com.ms.motorsphere_api.services.impl;
 
 import com.ms.motorsphere_api.model.dao.CommentDAO;
 import com.ms.motorsphere_api.model.dao.PublicationDAO;
-import com.ms.motorsphere_api.model.dao.UserDAO;
+import com.ms.motorsphere_api.model.dao.UsuarioDAO;
 import com.ms.motorsphere_api.model.dto.CommentDTO;
-import com.ms.motorsphere_api.model.entity.Bidder;
 import com.ms.motorsphere_api.model.entity.Comment;
 import com.ms.motorsphere_api.services.IComment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class CommentImpl implements IComment {
     @Autowired
     private CommentDAO commentDAO;
     @Autowired
-    private UserDAO userDAO;
+    private UsuarioDAO usuarioDAO;
     @Autowired
     private PublicationDAO publicationDAO;
 
@@ -52,7 +51,7 @@ public class CommentImpl implements IComment {
                     .information(commentDTO.getInformation())
                     .date(commentDTO.getDate())
                     .id(commentDTO.getCommentId())
-                    .user(userDAO.findById(commentDTO.getUserId()).orElse(null))
+                    .usuario(usuarioDAO.findById(commentDTO.getUserId()).orElse(null))
                     .publication(publicationDAO.findById(commentDTO.getPublicationId()).orElse(null))
                     .build();
             return commentDAO.save(comment);

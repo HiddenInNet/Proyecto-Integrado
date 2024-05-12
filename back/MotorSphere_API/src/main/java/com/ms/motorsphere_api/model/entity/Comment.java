@@ -16,19 +16,17 @@ import java.util.Date;
 @Table(name = "comments")
 public class Comment implements Serializable {
 
-    // Class Publication
-    @ManyToOne
-    @JoinColumn(name = "publication_id")
-    private Publication publication;
-    /////////////////////////////////////////
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "publication_id")
+    private Publication publication;
 
     @Column(name = "date", unique = false, nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")

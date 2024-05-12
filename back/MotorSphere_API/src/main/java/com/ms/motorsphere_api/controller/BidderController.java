@@ -73,7 +73,22 @@ public class BidderController {
 
         if (bidder != null) {
             log.info("dentro del if");
-            BidderDTO bidderDTO = bidderService.save(bidder);
+            BidderDTO bidderDTO = bidderService.add(bidder);
+            log.info("guardado");
+            return new ResponseEntity<>(bidderDTO, HttpStatus.CREATED);
+        }
+        response.put("message", ErrorResponse.SERVER_202);
+        response.put("bidderDTO", null);
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @PostMapping("update")
+    public ResponseEntity<?> updateBidder(@RequestBody BidderDTO bidder){
+        Map<String, Object> response = new HashMap<>();
+
+        if (bidder != null) {
+            log.info("dentro del if");
+            BidderDTO bidderDTO = bidderService.update(bidder);
             log.info("guardado");
             return new ResponseEntity<>(bidderDTO, HttpStatus.CREATED);
         }

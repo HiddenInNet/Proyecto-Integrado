@@ -1,0 +1,10 @@
+
+.main-container {
+    background: linear-gradient(rgba(71, 71, 71, 0.95), rgba(71, 71, 71, 0.95)), url(../assets/media/image.webp);
+    background-repeat: repeat;
+    background-position: center;
+    background-attachment: fixed;
+    --tw-bg-opacity: 0.9;
+    z-index: -10;
+}
+

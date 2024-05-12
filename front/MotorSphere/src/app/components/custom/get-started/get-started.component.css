@@ -1,0 +1,4 @@
+.background-gradient {
+    background: linear-gradient(rgba(70, 70, 70, 0.7), rgba(70, 70, 70, 0.9)), url(../../../../assets/media/get-started.jpg);
+    background-position: center;
+}

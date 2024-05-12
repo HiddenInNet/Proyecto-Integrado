@@ -1,6 +1,5 @@
 package com.ms.motorsphere_api.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -13,19 +12,18 @@ import java.util.Set;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 @Entity
 @Table(name = "bidders")
-public class Bidder implements Serializable{
+public class Bidder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @OneToMany(mappedBy = "bidder", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Event> events = new HashSet<>();

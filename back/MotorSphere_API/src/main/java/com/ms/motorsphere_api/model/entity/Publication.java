@@ -18,20 +18,6 @@ import java.util.Set;
 @Table(name = "publications")
 public class Publication implements Serializable {
 
-    // Class User
-    @ManyToOne
-    @JoinColumn(name="user_id")
-    private User user;
-
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-    ////////////////////////////////////////////////////
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -52,7 +38,11 @@ public class Publication implements Serializable {
     @Column(name = "information", nullable = true, unique = false)
     private String information;
 
-    @OneToMany(mappedBy = "id", cascade = CascadeType.ALL, orphanRemoval = true)
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
+
+    @OneToMany(mappedBy = "publication", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Comment> comments = new HashSet<>();
 
     // HELPERS

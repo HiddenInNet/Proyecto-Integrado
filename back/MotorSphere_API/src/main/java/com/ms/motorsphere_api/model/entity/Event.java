@@ -18,20 +18,16 @@ import java.util.Set;
 @Table(name = "events")
 public class Event implements Serializable {
 
-    // Bidder
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     @ManyToOne
     @JoinColumn(name = "bidder_id")
     private Bidder bidder;
 
-    @OneToOne(mappedBy = "event",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true,
-            fetch = FetchType.LAZY)
+    @OneToOne(mappedBy = "event", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Insignia insignia;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(name = "name", unique = false, nullable = false)
     private String name;
@@ -72,15 +68,15 @@ public class Event implements Serializable {
     }
 
     // Métodos Helpers
-    public void addIncriptionDate(User user, Date date) {
-        UserEvent userEvent = new UserEvent(user, this, date);
+    public void addIncriptionDate(Usuario usuario, Date date) {
+        UserEvent userEvent = new UserEvent(usuario, this, date);
         this.userEvents.add(userEvent);
-        user.getUserEvents().add(userEvent);
+        usuario.getUserEvents().add(userEvent);
     }
 
-    public void removeIncriptionDate(User user) {
-        UserEvent userEvent = new UserEvent(user, this);
-        user.getUserEvents().remove(userEvent);
+    public void removeIncriptionDate(Usuario usuario) {
+        UserEvent userEvent = new UserEvent(usuario, this);
+        usuario.getUserEvents().remove(userEvent);
         this.userEvents.remove(userEvent);
     }
 }

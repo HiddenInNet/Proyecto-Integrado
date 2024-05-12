@@ -1,7 +1,7 @@
 package com.ms.motorsphere_api.services.impl;
 
 import com.ms.motorsphere_api.model.dao.PublicationDAO;
-import com.ms.motorsphere_api.model.dao.UserDAO;
+import com.ms.motorsphere_api.model.dao.UsuarioDAO;
 import com.ms.motorsphere_api.model.dto.PublicationDTO;
 import com.ms.motorsphere_api.model.entity.Publication;
 import com.ms.motorsphere_api.services.IPublication;
@@ -16,7 +16,7 @@ public class PublicationImpl implements IPublication {
     @Autowired
     private PublicationDAO publicationDAO;
     @Autowired
-    private UserDAO userDAO;
+    private UsuarioDAO usuarioDAO;
 
     @Override
     public List<Publication> findAll() {
@@ -44,7 +44,7 @@ public class PublicationImpl implements IPublication {
                     .id(publicationDTO.getPublicationId())
                     .likes(publicationDTO.getLikes())
                     .date(publicationDTO.getUploadDate())
-                    .user(userDAO.findById(publicationDTO.getUserId()).orElse(null))
+                    .usuario(usuarioDAO.findById(publicationDTO.getUserId()).orElse(null))
                     .information(publicationDTO.getInformation())
                     .name(publicationDTO.getName())
                     .image(publicationDTO.getImage())

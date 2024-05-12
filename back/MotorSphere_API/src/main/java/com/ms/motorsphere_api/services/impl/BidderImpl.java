@@ -1,16 +1,16 @@
 package com.ms.motorsphere_api.services.impl;
 
-import com.ms.motorsphere_api.controller.UserController;
 import com.ms.motorsphere_api.model.dao.BidderDAO;
-import com.ms.motorsphere_api.model.dao.UserDAO;
+import com.ms.motorsphere_api.model.dao.LoginDAO;
+import com.ms.motorsphere_api.model.dao.UsuarioDAO;
 import com.ms.motorsphere_api.model.dto.BidderDTO;
 import com.ms.motorsphere_api.model.entity.Bidder;
-import com.ms.motorsphere_api.model.entity.User;
 import com.ms.motorsphere_api.services.IBidder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +23,9 @@ public class BidderImpl implements IBidder {
     @Autowired
     private BidderDAO bidderDAO;
     @Autowired
-    private UserDAO userDAO;
+    private UsuarioDAO usuarioDAO;
+    @Autowired
+    private LoginDAO loginDAO;
 
     @Override
     public List<BidderDTO> findAll() {
@@ -35,7 +37,7 @@ public class BidderImpl implements IBidder {
              bidder) {
             bidderDTOS.add(BidderDTO.builder()
                             .bidderId(bid.getId())
-                            .userId(bid.getUser().getId())
+                            .userId(bid.getUsuario().getId())
                             .checker(bid.isChecker())
                             .creationDate(bid.getCreationDate())
                     .build());
@@ -50,7 +52,7 @@ public class BidderImpl implements IBidder {
 
         return bidder.map(value -> BidderDTO.builder()
                 .bidderId(value.getId())
-                .userId(value.getUser().getId())
+                .userId(value.getUsuario().getId())
                 .checker(value.isChecker())
                 .creationDate(value.getCreationDate())
                 .build()).orElse(null);
@@ -65,27 +67,44 @@ public class BidderImpl implements IBidder {
         return false;
     }
 
+
+
+    @Transactional
+    public BidderDTO add(BidderDTO bidderDTO) {
+
+        Bidder bidder = Bidder.builder()
+
+                .build();
+
+        bidderDAO.save(bidder);
+        return null;
+    }
+
     @Override
-    public BidderDTO save(BidderDTO bidderDTO) {
-        Bidder bidder = null;
-        if(bidderDTO != null && userDAO.findById(bidderDTO.getUserId()).isPresent()){
-            log.info("dentro: ");
-            Bidder bidderAdd = Bidder.builder()
-                    .id(bidderDTO.getBidderId())
-                    .user(userDAO.findById(bidderDTO.getUserId()).orElse(null))
-                    .creationDate(bidderDTO.getCreationDate())
-                    .checker(bidderDTO.isChecker())
-                    .build();
-            log.info("construido: "+bidderAdd.toString());
-            bidder = bidderDAO.save(bidderAdd);
+    @Transactional
+    public BidderDTO update(BidderDTO bidderDTO) {
+        // Obtener el bidder existente
+        Optional<Bidder> optionalBidder = bidderDAO.findById(bidderDTO.getBidderId());
+
+        // Verificar si el bidder existe en la base de datos
+        if (optionalBidder.isPresent()) {
+            Bidder bidder = optionalBidder.get();
+
+            // Actualizar los campos necesarios
+            bidder.setCreationDate(bidderDTO.getCreationDate());
+            bidder.setChecker(bidderDTO.isChecker());
+
+            // Guardar los cambios en la base de datos
+            Bidder bidder1 = bidderDAO.save(bidder);
 
             return BidderDTO.builder()
-                    .bidderId(bidder.getId())
-                    .userId(bidder.getUser().getId())
-                    .creationDate(bidder.getCreationDate())
-                    .checker(bidder.isChecker())
+                    .bidderId(bidder1.getId())
+                    .userId(bidder1.getUsuario().getId())
+                    .creationDate(bidder1.getCreationDate())
+                    .checker(bidder1.isChecker())
                     .build();
+        } else {
+            return null;
         }
-        return null;
     }
 }

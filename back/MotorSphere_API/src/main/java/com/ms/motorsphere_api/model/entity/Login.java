@@ -4,11 +4,12 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Builder
 @Entity
 @Table(name = "login")
@@ -18,14 +19,13 @@ public class Login implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long loginId;
 
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    @OneToOne(mappedBy = "login")
+    private Usuario usuario;
 
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 
-    @Column(name = "password", unique = false, nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
 }

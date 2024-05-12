@@ -1,0 +1,25 @@
+.background-gradient {
+    background: linear-gradient(rgba(116, 116, 116, 0.6), rgba(131, 131, 131, 0.6)), url(../../../../assets/media/fondo-login.jpg);
+    background-position: bottom;
+}
+
+.anima:hover {
+    animation: moto-move 2s ease-out 0s 1 alternate forwards;
+    -webkit-animation: moto-move 2s ease-out 0s 1 alternate forwards;
+}
+
+@keyframes moto-move {
+	0% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+
+	100% {
+		opacity: 0;
+		transform: translateX(-800px);
+		-webkit-transform: translateX(-800px);
+		-moz-transform: translateX(-800px);
+		-ms-transform: translateX(-800px);
+		-o-transform: translateX(-800px);
+}
+}

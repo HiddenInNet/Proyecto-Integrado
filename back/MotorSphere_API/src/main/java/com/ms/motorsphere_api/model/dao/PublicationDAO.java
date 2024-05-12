@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface PublicationDAO extends CrudRepository<Publication, Long> {
 
-    List<Publication> findAllByUserId(Long id);
+    List<Publication> findAllByUsuarioId(Long id);
 }

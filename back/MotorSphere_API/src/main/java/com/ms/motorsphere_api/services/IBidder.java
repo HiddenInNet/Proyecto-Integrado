@@ -9,5 +9,7 @@ public interface IBidder {
     List<BidderDTO> findAll();
     BidderDTO findById(Long id);
     Boolean remove(Long id);
-    BidderDTO save(BidderDTO bidderDTO);
+    BidderDTO add(BidderDTO bidderDTO);
+
+    BidderDTO update(BidderDTO bidderDTO);
 }

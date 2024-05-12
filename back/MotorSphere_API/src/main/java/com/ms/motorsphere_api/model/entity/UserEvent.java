@@ -18,28 +18,28 @@ public class UserEvent implements Serializable {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
-    private User user;
+    @JoinColumn(name = "usuario_id")
+    private Usuario usuario;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "event_id", insertable = false, updatable = false)
+    @JoinColumn(name = "event_id")
     private Event event;
 
     @Column(name = "inscription_date", nullable = false, unique = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date inscriptionDate;
 
-    public UserEvent(User user, Event event, Date incriptionDate) {
+    public UserEvent(Usuario usuario, Event event, Date incriptionDate) {
         super();
-        this.user = user;
+        this.usuario = usuario;
         this.event = event;
         this.inscriptionDate = incriptionDate;
     }
 
-    public UserEvent(User user, Event event) {
+    public UserEvent(Usuario usuario, Event event) {
         super();
-        this.user = user;
+        this.usuario = usuario;
         this.event = event;
     }
 
@@ -49,7 +49,7 @@ public class UserEvent implements Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(user, event);
+        return Objects.hash(usuario, event);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class UserEvent implements Serializable {
         if (obj == null) return false;
         if (getClass() != obj.getClass()) return false;
         UserEvent other = (UserEvent) obj;
-        return Objects.equals(user, other.user) && Objects.equals(event, other.event);
+        return Objects.equals(usuario, other.usuario) && Objects.equals(event, other.event);
     }
 
     @Override

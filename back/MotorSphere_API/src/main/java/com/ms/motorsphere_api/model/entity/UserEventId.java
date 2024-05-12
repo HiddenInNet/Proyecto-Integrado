@@ -4,17 +4,17 @@ import java.io.Serializable;
 
 public class UserEventId implements Serializable {
 
-    private Long user;
+    private Long usuario;
     private Long event;
 
     // Getters y setters
 
-    public Long getUser() {
-        return user;
+    public Long getUsuario() {
+        return usuario;
     }
 
-    public void setUser(Long user) {
-        this.user = user;
+    public void setUsuario(Long usuario) {
+        this.usuario = usuario;
     }
 
     public Long getEvent() {

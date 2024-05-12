@@ -1,27 +1,27 @@
 
 USE motorSphere;
 
--- Table USERS
-LOCK TABLES `users` WRITE;
-INSERT INTO `users` (email, name, last_name, birth_date, phone, profile_create_date, biography, profile_image)
-    VALUES
-        ('usuario1@example.com', 'Juan', 'Pérez', '1990-05-15','660536475', '2022-01-01', 'Biografía de Juan Pérez', NULL),
-        ('usuario2@example.com', 'María', 'Gómez', '1985-08-25','626137535', '2022-01-02', 'Biografía de María Gómez', NULL),
-        ('usuario3@example.com', 'Carlos', 'López', '1998-12-10','637536826', '2022-01-03', 'Biografía de Carlos López', NULL);
-
+LOCK TABLES `login` WRITE;
+INSERT INTO `login` (username, password)
+VALUES
+    ('dgongar', '123456'),
+    ('dgongar3112', '123456'),
+    ('admin', 'admin');
 UNLOCK TABLES;
 
-LOCK TABLES `login` WRITE;
-INSERT INTO `login` (user_id, username, password)
-VALUES
-    (1, 'dgongar', '123456'),
-    (2, 'dgongar3112', '123456'),
-    (3, 'admin', 'admin');
+-- Table USERS
+LOCK TABLES `usuarios` WRITE;
+INSERT INTO `usuarios` (login_id, email, name, last_name, birth_date, phone, profile_create_date, biography, profile_image)
+    VALUES
+        (1, 'usuario1@example.com', 'Juan', 'Pérez', '1990-05-15','660536475', '2022-01-01', 'Biografía de Juan Pérez', NULL),
+        (2, 'usuario2@example.com', 'María', 'Gómez', '1985-08-25','626137535', '2022-01-02', 'Biografía de María Gómez', NULL),
+        (3, 'usuario3@example.com', 'Carlos', 'López', '1998-12-10','637536826', '2022-01-03', 'Biografía de Carlos López', NULL);
+
 UNLOCK TABLES;
 
 -- Table PUBLICATIONS
 LOCK TABLES `publications` WRITE;
-INSERT INTO publications (name, upload_date, likes, image, information, user_id)
+INSERT INTO publications (name, upload_date, likes, image, information, usuario_id)
     VALUES
         ('Publicación 1', '2022-01-01', 10, NULL, 'Información de la publicación 1', 1),
         ('Publicación 2', '2022-01-02', 15, NULL, 'Información de la publicación 2', 2),
@@ -31,7 +31,7 @@ UNLOCK TABLES;
 
 -- Table COMMENTS
 LOCK TABLES `comments` WRITE;
-INSERT INTO comments (user_id, date, information, publication_id)
+INSERT INTO comments (usuario_id, date, information, publication_id)
 VALUES
     (1, '2022-01-01', 'Comentario de UsuarioA en Publicación 1', 1),
     (1, '2022-01-02', 'Comentario de UsuarioB en Publicación 2', 2),
@@ -40,7 +40,7 @@ UNLOCK TABLES;
 
 -- Table BIDDERS
 LOCK TABLES `bidders` WRITE;
-INSERT INTO bidders (user_id, creation_date, checker)
+INSERT INTO bidders (usuario_id, creation_date, checker)
     VALUES
         (1, '2022-01-01', true),
         (2, '2022-01-02', false);
@@ -69,7 +69,7 @@ UNLOCK TABLES;
 
 -- User-Event (Inscripctions)
 LOCK TABLES `user_event` WRITE;
-INSERT INTO user_event (user_id, event_id, inscription_date)
+INSERT INTO user_event (usuario_id, event_id, inscription_date)
     VALUES
         (1, 1, '2022-01-01'),
         (2, 2, '2022-01-02'),

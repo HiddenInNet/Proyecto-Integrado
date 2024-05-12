@@ -27,7 +27,6 @@ public class Insignia implements Serializable {
     @Column(name = "value", unique = false, nullable = false)
     private Long value;
 
-    // Event
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "event_id")
     private Event event;

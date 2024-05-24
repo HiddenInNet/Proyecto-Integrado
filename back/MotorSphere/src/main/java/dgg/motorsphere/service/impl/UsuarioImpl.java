@@ -59,32 +59,34 @@ public class UsuarioImpl implements IUsuario {
         return buildUsuarioDTO(usuarioGuardado);
     }
 
-    @Transactional
     @Override
-    public UsuarioDTO insert(UsuarioInsertDTO UsuarioInsertDTO) {
+    public UsuarioDTO insert(UsuarioInsertDTO usuarioInsertDTO) {
+        log.info("El valor es: "+usuarioInsertDTO);
 
-        if (UsuarioInsertDTO != null && userDAO.findById(UsuarioInsertDTO.getUserId()).isPresent()) {
-            if(usuarioDAO.findByEmail(UsuarioInsertDTO.getEmail()) == null) {
+        if (usuarioInsertDTO != null && userDAO.findById(usuarioInsertDTO.getUserId()).isPresent()) {
+            if(usuarioDAO.findByEmail(usuarioInsertDTO.getEmail()) == null) {
 
                 Usuario usuario = Usuario.builder()
-                        .user(userDAO.findById(UsuarioInsertDTO.getUserId()).orElse(null))
-                        .email(UsuarioInsertDTO.getEmail())
-                        .nombre(UsuarioInsertDTO.getName())
-                        .apellidos(UsuarioInsertDTO.getLastName())
-                        .fechaNacimiento(UsuarioInsertDTO.getBirthDate())
-                        .telefono(UsuarioInsertDTO.getPhone())
-                        .fechaCreacionPerfil(UsuarioInsertDTO.getProfileDate())
-                        .biografia(UsuarioInsertDTO.getBiography())
-                        .imagenPerfil(UsuarioInsertDTO.getProfileImage())
+                        .user(userDAO.findById(usuarioInsertDTO.getUserId()).orElse(null))
+                        .email(usuarioInsertDTO.getEmail())
+                        .nombre(usuarioInsertDTO.getName())
+                        .apellidos(usuarioInsertDTO.getLastName())
+                        .fechaNacimiento(usuarioInsertDTO.getBirthDate())
+                        .telefono(usuarioInsertDTO.getPhone())
+                        .fechaCreacionPerfil(usuarioInsertDTO.getProfileDate())
+                        .biografia(usuarioInsertDTO.getBiography())
+                        .imagenPerfil(usuarioInsertDTO.getProfileImage())
                         .build();
                 if(usuario.getUser() != null) {
 
                     usuario = usuarioDAO.save(usuario);
+                    log.info("El valor es: "+buildUsuarioDTO(usuario));
 
                     return buildUsuarioDTO(usuario);
                 }
             }
         }
+        log.error("El valor es nulo");
         return null;
     }
 

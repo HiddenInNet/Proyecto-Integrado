@@ -1,4 +1,4 @@
 export interface UserLogged {
     jwt: string;
-    username: string;
+    userId: number;
 }

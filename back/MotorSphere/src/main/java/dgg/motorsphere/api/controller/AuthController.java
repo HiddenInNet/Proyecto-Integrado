@@ -1,6 +1,7 @@
 package dgg.motorsphere.api.controller;
 
 import dgg.motorsphere.api.dto.login.LoginResponseDTO;
+import dgg.motorsphere.api.dto.login.RegisterDTO;
 import dgg.motorsphere.api.dto.login.UserDTO;
 import dgg.motorsphere.service.JwtTokenService;
 import dgg.motorsphere.service.impl.LoginService;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController()
@@ -38,7 +41,7 @@ public class AuthController {
             String token = jwtTokenService.generateToken(Math.toIntExact(userId.get()), "USER");
             LoginResponseDTO response = LoginResponseDTO.builder()
                     .jwt(token)
-                    .username(userDTO.getUsername())
+                    .userId(userId.orElse(0L))
                     .build();
 
             return new ResponseEntity<>(response, HttpStatus.OK);
@@ -48,10 +51,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<?> register(@RequestBody UserDTO userDTO) {
+    public ResponseEntity<?> register(@RequestBody RegisterDTO registerDTO) {
+        log.info("Dentro de register");
 
-        String response = loginService.register(userDTO);
+        String response = loginService.register(registerDTO);
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        Map<String, String> res = new HashMap<>();
+        res.put("server_response", response);
+
+        log.info("Informacion " + response);
+        return new ResponseEntity<>(res, HttpStatus.OK);
     }
 }

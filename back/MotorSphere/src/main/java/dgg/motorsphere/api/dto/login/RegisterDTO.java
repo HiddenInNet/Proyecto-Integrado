@@ -13,4 +13,12 @@ public class RegisterDTO implements Serializable {
 
     private String username;
     private String password;
+
+    private String biography;
+    private String birthDate;
+    private String email;
+    private String name;
+    private String lastName;
+    private String phone;
+    private String profileImage;
 }

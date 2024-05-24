@@ -5,11 +5,12 @@ import lombok.Data;
 import lombok.ToString;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 @Data
 @ToString
 @Builder
 public class LoginResponseDTO implements Serializable {
     private String jwt;
-    private String username;
+    private Long userId;
 }

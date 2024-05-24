@@ -58,7 +58,7 @@ public class Usuario implements Serializable {
     @Column(name = "imagenPerfil", unique = false, nullable = true)
     private String imagenPerfil;
 
-    @Column(name = "puntuacion", unique = false, nullable = false)
+    @Column(name = "puntuacion", unique = false, nullable = true)
     @Range(min = 0, max = 100)
     private Integer puntuacion;
 

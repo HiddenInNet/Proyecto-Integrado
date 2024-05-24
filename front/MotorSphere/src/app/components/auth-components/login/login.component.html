@@ -1,7 +1,7 @@
-<section class="w-full flex background-gradient bg-silver rounded-lg border-4 justify-between mt-4 p-20">
+<section class="w-full flex background-gradient bg-silver rounded-lg border-4 justify-between my-4 p-20">
     <div class="flex items-center justify-center w-1/2 dark:bg-gray-950">
         <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 md:mx-20 py-6 md:w-full">
-            <h1 class="text-2xl font-bold text-center mb-4 dark:text-gray-200">Welcome Back!</h1>
+            <h1 class="text-2xl font-bold text-center mb-4 dark:text-gray-200">Bienvenido de nuevo !</h1>
             <form action="#" #form="ngForm" (ngSubmit)="onSubmit(form.value)">
                 <div class="mb-4">
                     <label for="email"
@@ -24,8 +24,14 @@
                             class="text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Registrate</a>
                     </div>
                 </div>
+                <div class="flex mb-3 items-start">
+                    <div class="flex items-center h-5">
+                        <input id="remember" type="checkbox" value="" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800" required />
+                    </div>
+                    <label for="remember" class="ms-2 text-sm font-light text-gray-900 dark:text-gray-300">Recuérdame</label>
+                </div>
                 <button type="submit"
-                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Login</button>
+                    class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Iniciar sesión</button>
             </form>
         </div>
     </div>

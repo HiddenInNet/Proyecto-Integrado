@@ -49,11 +49,11 @@ public class Evento implements Serializable {
 
 
     @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
     private Localizacion localizacion;
 
     @OneToOne(cascade = CascadeType.ALL)
-    @PrimaryKeyJoinColumn
+    @JoinColumn(name = "insignia_id", referencedColumnName = "id")
     private Insignia insignia;
 
     @ManyToOne

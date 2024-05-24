@@ -18,6 +18,9 @@ public class Insignia implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @OneToOne(mappedBy = "insignia")
+    private Evento evento;
+
     @Column(nullable = false)
     private String nombre;
 

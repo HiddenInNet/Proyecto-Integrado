@@ -3,7 +3,7 @@ import { User } from "./User";
 export interface Publication {
     publicationId: number;
     name: string;
-    uploadDate: Date;
+    uploadDate: string;
     likes: number;
     image: Uint8Array;
     comments: Comment[];

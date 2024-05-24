@@ -1,0 +1,63 @@
+<div class="flex items-center justify-center rounded-xl border-4">
+    <div
+        class="w-full max-w-sm bg-white border border-gray-200 rounded-md shadow dark:bg-gray-800 dark:border-gray-700">
+        <div class="">
+            <svg viewBox="0 0 100 100" width="100%" height="auto" length="auto" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <clipPath id="customShape" >
+                  <path d="M10,10 H90 V90 L50,75 L10,90 Z" />
+                </clipPath>
+              </defs>
+              <a [attr.xlink:href]="'/event/' + event.eventId" [routerLink]="['/event', event.eventId]">
+                <image [attr.href]="eventImage" width="100" height="100" clip-path="url(#customShape)" />
+              </a>
+              <path d="M10,10 H90 V90 L50,75 L10,90 Z" stroke="black" fill="none" />
+            </svg>
+          </div>
+        <div class="px-5 pb-5">
+            <a [routerLink]="'/event/+{{event.eventId}}'">
+                <h5 class="text-xl font-semibold tracking-tight text-gray-900 dark:text-white">{{ event.name }}</h5>
+            </a>
+            <div class="flex items-center mt-2.5 mb-5">
+                <div class="flex items-center space-x-1 rtl:space-x-reverse">
+                    @for (star of getStarArray(event.score); track $index) {
+                    @if (star === 1) {
+                    <svg class="w-4 h-4 text-yellow-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                        fill="currentColor" viewBox="0 0 22 20">
+                        <path
+                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    }
+                    @if (star === 0) {
+                    <svg class="w-4 h-4 text-gray-200 dark:text-gray-600" aria-hidden="true"
+                        xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 20">
+                        <path
+                            d="M20.924 7.625a1.523 1.523 0 0 0-1.238-1.044l-5.051-.734-2.259-4.577a1.534 1.534 0 0 0-2.752 0L7.365 5.847l-5.051.734A1.535 1.535 0 0 0 1.463 9.2l3.656 3.563-.863 5.031a1.532 1.532 0 0 0 2.226 1.616L11 17.033l4.518 2.375a1.534 1.534 0 0 0 2.226-1.617l-.863-5.03L20.537 9.2a1.523 1.523 0 0 0 .387-1.575Z" />
+                    </svg>
+                    }
+                    }
+                </div>
+                <span
+                    class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ms-3">{{
+                    event.score }}</span>
+            </div>
+            <div class="pb-4">
+                <span>
+                    Plazas disponibles
+                </span>
+                <div class="w-full bg-gray-200 rounded-full dark:bg-gray-700">
+                    <div class="bg-blue-600 text-xs font-medium text-blue-100 text-center p-0.5 leading-none rounded-full"
+                        style="width: 50%"> {{getAllPlaces()}}</div>
+                </div>
+            </div>
+            <div class="flex items-center justify-between">
+                <span class="text-sm font-extralight text-gray-900 dark:text-white">{{event.localization.municipality}},
+                    {{event.localization.province}}</span>
+                <a [routerLink]="'/event/+{{event.eventId}}'"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-2 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                    Ver más
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

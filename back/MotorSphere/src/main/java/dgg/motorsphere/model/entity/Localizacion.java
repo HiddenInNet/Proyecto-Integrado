@@ -2,10 +2,8 @@ package dgg.motorsphere.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -19,6 +17,9 @@ public class Localizacion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @OneToOne(mappedBy = "localizacion")
+    private Evento evento;
 
     private String latitud;
 

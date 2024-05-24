@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Login } from '../../../models/Login';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../../services/auth.service';
+import { LogService } from '../../../services/log.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,7 @@ import { AuthService } from '../../../services/auth.service';
 export class LoginComponent {
 
   public loginForm: Login = <Login>{};
+  private logService: LogService = inject(LogService)
 
   constructor(private peti: AuthService, private ruta: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -21,7 +23,13 @@ export class LoginComponent {
     console.log("Dentro de onSubmit: Data -> ",loginForm)
 
     this.peti.login(loginForm).subscribe({
-      next: data => {console.log(data)},
+      next: data => {
+        console.log("Respuesta de login: ",data);
+        this.logService.isLoggedIn$.next(true);
+        this.peti.setCookie('user_jwt', data.jwt)
+        this.peti.setCookie('user_id', String(data.userId));
+        this.ruta.navigate(['home'])
+      },
       error: error => console.log(error)
     })
   }

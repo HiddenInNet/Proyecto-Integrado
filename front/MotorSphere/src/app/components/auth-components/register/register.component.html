@@ -1,1 +1,76 @@
-<p>register works!</p>
+<section class="w-full flex background-gradient bg-silver rounded-lg border-4 justify-between my-4 p-20">
+    <div class="bg-white dark:bg-gray-900 shadow-md rounded-lg px-8 md:mx-20 py-6 md:w-full">
+        <h1 class="text-2xl font-bold text-center mb-4 dark:text-gray-200">Únete a nosotros</h1>
+        <form action="#" #form="ngForm" (ngSubmit)="onSubmit(form.value)">
+            <div class="grid w-full gap-4 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900">Nombre</label>
+                    <input type="text" id="name" name="name"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="{{registerForm.name}}" required [(ngModel)]="registerForm.name" />
+                </div>
+                <div>
+                    <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900">Apellidos</label>
+                    <input type="text" id="lastName" name="lastName"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="{{registerForm.lastName}}" required [(ngModel)]="registerForm.lastName" />
+                </div>
+            </div>
+            <div class="grid w-full gap-4 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="username" class="block mb-2 text-sm font-medium text-gray-900">Nombre de usuario</label>
+                    <input type="text" id="username" name="username"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="{{registerForm.username}}" required [(ngModel)]="registerForm.username" />
+                </div>
+                <div>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Correo electrónico</label>
+                    <input type="email" id="email" name="email"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="{{registerForm.email}}" required [(ngModel)]="registerForm.email" />
+                </div>
+            </div>
+            <div class="grid w-full gap-4 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="birthDate" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                        Fecha de nacimiento
+                    </label>
+                    <input id="birthDate" type="date" name="birthDate"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        [(ngModel)]="registerForm.birthDate" [value]="registerForm" required>
+                </div>
+                <div>
+                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900">Número de teléfono</label>
+                    <input type="tel" id="phone" name="phone"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
+                        placeholder="{{registerForm.phone}}" required [(ngModel)]="registerForm.phone" />
+                </div>
+            </div>
+            <div class="grid w-full gap-4 mb-6 md:grid-cols-2">
+                <div>
+                    <label for="biography"
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Biography</label>
+                    <textarea id="biography" rows="4" name="biography"
+                        class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="{{registerForm.biography}}" [(ngModel)]="registerForm.biography"></textarea>
+                </div>
+                <div class="flex flex-col self-end">
+                    <div class="flex items-center justify-start mb-4">
+                        <input id="terms" type="checkbox" [(ngModel)]="terms" name="terms"
+                            class="mr-2 h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500">
+                        <label for="terms" class="text-sm text-gray-900 dark:text-gray-400">He leído y acepto los
+                            <a href="#" class="text-indigo-600 hover:underline dark:text-indigo-300">términos y
+                                condiciones</a>.
+                        </label>
+                    </div>
+                    <div>
+                        <button type="submit"
+                            class="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                            Registrarse
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</section>

@@ -30,8 +30,9 @@ public class UsuarioController {
     private IUsuario usuarioService;
 
     @PostMapping("add")
-    public ResponseEntity<?> create(@RequestBody UsuarioInsertDTO UsuarioInsertDTO){
-        UsuarioDTO response = usuarioService.insert(UsuarioInsertDTO);
+    public ResponseEntity<?> create(@RequestBody UsuarioInsertDTO usuarioInsertDTO){
+        log.info("Usuario");
+        UsuarioDTO response = usuarioService.insert(usuarioInsertDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -58,6 +59,7 @@ public class UsuarioController {
     @GetMapping("{id}")
     public ResponseEntity<?> getById(@PathVariable Long id){
         UsuarioDTO response = usuarioService.getById(id);
+        log.info("response", response);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 

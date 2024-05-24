@@ -3,7 +3,6 @@ package dgg.motorsphere.model.entity.relations;
 import dgg.motorsphere.model.entity.Evento;
 import dgg.motorsphere.model.entity.Fecha;
 import dgg.motorsphere.model.entity.Usuario;
-import dgg.motorsphere.model.entity.Vehiculo;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -33,7 +32,6 @@ public class UsuarioInscritoEvento implements Serializable {
 
     // RELACIONES
 
-
     @ManyToOne
     @JoinColumn(name = "usuario_id")
     private Usuario usuario;
@@ -45,9 +43,5 @@ public class UsuarioInscritoEvento implements Serializable {
     @ManyToOne
     @JoinColumn(name = "fecha_id")
     private Fecha fecha;
-
-    @ManyToOne
-    @JoinColumn(name = "vehiculo_id")
-    private Vehiculo vehiculo;
 
 }

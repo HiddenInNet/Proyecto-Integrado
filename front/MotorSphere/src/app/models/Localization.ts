@@ -1,7 +1,7 @@
 export interface Localization {
   id: number;
-  latitude: number;
-  longitude: number;
+  latitude: string;
+  longitude: string;
   municipality: string;
   province: string;
   country: string;

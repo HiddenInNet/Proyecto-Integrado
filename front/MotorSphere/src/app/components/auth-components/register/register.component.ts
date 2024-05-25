@@ -36,6 +36,7 @@ export class RegisterComponent {
     this.authService.createUser(formValue).subscribe({
       next: (data) => {
         console.log(data);
+        this.ruta.navigate(['/login'])
       },
       error: (err) => {
         console.error(err);

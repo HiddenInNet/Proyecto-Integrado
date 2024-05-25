@@ -8,6 +8,7 @@ public interface IOfertante {
 
     List<OfertanteDTO> getAll();
     OfertanteDTO getById(Long id);
+    OfertanteDTO getByUsuarioId(Long id);
 
     Boolean remove(Long id);
     OfertanteDTO insert(OfertanteDTO ofertanteDTO);

@@ -46,6 +46,24 @@ public class OfertanteImpl implements IOfertante {
     }
 
     @Override
+    public OfertanteDTO getByUsuarioId(Long id) {
+
+        if (id != null) {
+            Ofertante ofertante = ofertanteDAO.findByUsuarioId(id);
+            if (ofertante != null) {
+                return OfertanteDTO.builder()
+                        .id(ofertante.getId())
+                        .userId(ofertante.getUsuario().getId())
+                        .creationDate(ofertante.getFechaCreacion())
+                        .checker(ofertante.isChecker())
+                        .build();
+            }
+            return null;
+        }
+        return null;
+    }
+
+    @Override
     public Boolean remove(Long id) {
         if(id != null){
             ofertanteDAO.deleteById(id);

@@ -1,21 +1,21 @@
 package dgg.motorsphere.service.impl;
 
+import dgg.motorsphere.api.dto.evento.CreateEventoDTO;
 import dgg.motorsphere.api.dto.evento.EventoDTO;
 import dgg.motorsphere.api.dto.FechasEventoDTO;
+import dgg.motorsphere.api.dto.insignia.InsigniaDTO;
 import dgg.motorsphere.api.dto.localizacion.LocalizacionDTO;
-import dgg.motorsphere.model.dao.EventoDAO;
-import dgg.motorsphere.model.dao.FechaDAO;
-import dgg.motorsphere.model.dao.LocalizacionDAO;
-import dgg.motorsphere.model.dao.OfertanteDAO;
-import dgg.motorsphere.model.entity.Evento;
-import dgg.motorsphere.model.entity.Fecha;
-import dgg.motorsphere.model.entity.Localizacion;
+import dgg.motorsphere.model.dao.*;
+import dgg.motorsphere.model.entity.*;
+import dgg.motorsphere.model.entity.relations.EtiquetaEvento;
 import dgg.motorsphere.service.IEvento;
+import jakarta.persistence.EntityNotFoundException;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 public class EventoImpl implements IEvento {
@@ -26,6 +26,8 @@ public class EventoImpl implements IEvento {
     private OfertanteDAO ofertanteDAO;
     @Autowired
     private FechaDAO fechaDAO;
+    @Autowired
+    private InsigniaDAO insigniaDAO;
     @Autowired
     private LocalizacionDAO localizacionDAO;
 
@@ -122,8 +124,128 @@ public class EventoImpl implements IEvento {
     }
 
     @Override
-    public EventoDTO insert(EventoDTO eventoDTO) {
-        return null;
+    @Transactional
+    public EventoDTO insert(CreateEventoDTO createEventoDTO) {
+        if (createEventoDTO == null) {
+            return null;
+        }
+
+        // Obtener el ofertante
+        Optional<Ofertante> ofertanteOptional = ofertanteDAO.findById(createEventoDTO.getBidderId());
+        if (!ofertanteOptional.isPresent()) {
+            throw new EntityNotFoundException("Ofertante no encontrado");
+        }
+        Ofertante ofertante = ofertanteOptional.get();
+
+        // Guardar insignia
+        Insignia insignia = saveInsignia(createEventoDTO.getInsignia());
+        insignia = insigniaDAO.save(insignia);
+
+        // Guardar localización
+        Localizacion localizacion = saveLocalizacion(createEventoDTO.getLocalization());
+        localizacion = localizacionDAO.save(localizacion);
+
+        // Crear el evento sin fechas todavía
+        Evento evento = Evento.builder()
+                .ofertante(ofertante)
+                .nombre(createEventoDTO.getName())
+                .descripcion(createEventoDTO.getDescription())
+                .fechaAnuncioEvento(new Date())
+                .insignia(insignia)
+                .etiquetasEvento(new HashSet<>())
+                .exigencia(createEventoDTO.getExigency())
+                .usuariosInscritosEvento(null)
+                .imagen(createEventoDTO.getImage())
+                .localizacion(localizacion)
+                .puntuacion(createEventoDTO.getScore())
+                .build();
+
+        // Guardar el evento primero para obtener su ID
+        evento = eventoDAO.save(evento);
+
+        // Guardar las fechas con referencia al evento
+        Set<Fecha> fechas = new HashSet<>();
+        for (FechasEventoDTO fechaDTO : createEventoDTO.getDates()) {
+            Fecha fecha = saveFecha(fechaDTO);
+            fecha.setEvento(evento); // Establecer la relación con el evento
+            fecha = fechaDAO.save(fecha);
+            fechas.add(fecha);
+        }
+
+        // Establecer las fechas en el evento
+        evento.setFechas(fechas);
+
+        // Guardar el evento nuevamente para actualizar las fechas
+        Evento savedEvent = eventoDAO.save(evento);
+
+        return EventoDTO.builder()
+                .eventId(savedEvent.getId())
+                .bidderId(savedEvent.getOfertante().getId())
+                .name(savedEvent.getNombre())
+                .dates(savedEvent.getFechas().stream()
+                        .map(this::buildFechasParaEventoDTO)
+                        .collect(Collectors.toList()))
+                .description(savedEvent.getDescripcion())
+                .score(savedEvent.getPuntuacion())
+                .exigency(savedEvent.getExigencia())
+                .announcementDate(savedEvent.getFechaAnuncioEvento())
+                .image(savedEvent.getImagen())
+                .localization(LocalizacionDTO.builder()
+                        .id(savedEvent.getLocalizacion().getId())
+                        .municipality(savedEvent.getLocalizacion().getMunicipio())
+                        .province(savedEvent.getLocalizacion().getProvincia())
+                        .longitude(savedEvent.getLocalizacion().getLongitud())
+                        .latitude(savedEvent.getLocalizacion().getLatitud())
+                        .build())
+                .insigniaId(savedEvent.getInsignia().getId())
+                .build();
+    }
+
+    public Localizacion saveLocalizacion(LocalizacionDTO localizacionDTO) {
+        return Localizacion.builder()
+                .municipio(localizacionDTO.getMunicipality())
+                .provincia(localizacionDTO.getProvince())
+                .pais(localizacionDTO.getCountry())
+                .latitud(localizacionDTO.getLatitude())
+                .longitud(localizacionDTO.getLongitude())
+                .build();
+    }
+
+    public Set<Fecha> fechasDTOtoFechas(List<FechasEventoDTO> fechasEventoDTO) {
+        Set<Fecha> fechas = new HashSet<>();
+
+        for (FechasEventoDTO fecha : fechasEventoDTO) {
+            fechas.add(
+                    Fecha.builder()
+                            .fechaInicio(fecha.getStartDate())
+                            .fechaFinal(fecha.getFinalDate())
+                            .plazas(fecha.getPlaces())
+                            .plazasDisponibles(fecha.getPlacesAvailable())
+                            .precio(fecha.getPrice())
+                            .usuariosInscritosFecha(null)
+                            .build()
+            );
+        }
+        return fechas;
+    }
+
+    public Insignia saveInsignia(InsigniaDTO insigniaDTO) {
+        return Insignia.builder()
+                .nombre(insigniaDTO.getName())
+                .imagen(insigniaDTO.getImage())
+                .valor(insigniaDTO.getValue())
+                .build();
+    }
+
+    public Fecha saveFecha(FechasEventoDTO fechaDTO) {
+        return Fecha.builder()
+                .fechaInicio(fechaDTO.getStartDate())
+                .fechaFinal(fechaDTO.getFinalDate())
+                .plazas(fechaDTO.getPlaces())
+                .plazasDisponibles(fechaDTO.getPlacesAvailable())
+                .precio(fechaDTO.getPrice())
+                .usuariosInscritosFecha(null)
+                .build();
     }
 
     @Override

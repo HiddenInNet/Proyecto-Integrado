@@ -1,6 +1,8 @@
 package dgg.motorsphere.api.controller;
 
+import dgg.motorsphere.api.dto.evento.CreateEventoDTO;
 import dgg.motorsphere.api.dto.evento.EventoDTO;
+import dgg.motorsphere.model.entity.Evento;
 import dgg.motorsphere.service.IEvento;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +31,12 @@ public class EventoController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getById(@PathVariable Long id) {
         EventoDTO response = eventoService.getById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<?> addEvent(@RequestBody CreateEventoDTO createEventoDTO){
+        EventoDTO response = eventoService.insert(createEventoDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

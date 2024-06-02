@@ -47,25 +47,6 @@ VALUES
 
 UNLOCK TABLES;
 
--- Table PUBLICATIONS
-LOCK TABLES `publicaciones` WRITE;
-INSERT INTO publicaciones (nombre, fecha_subida, likes, imagen, informacion, usuario_id)
-VALUES
-    ('Publicación 1', '2022-01-01', 10, 'http://localhost:8081/api/v0/media/logo.webp', 'Información de la publicación 1', 1),
-    ('Publicación 2', '2022-01-02', 15, 'http://localhost:8081/api/v0/media/logo.webp', 'Información de la publicación 2', 2),
-    ('Publicación 3', '2022-01-03', 20, 'http://localhost:8081/api/v0/media/logo.webp', 'Información de la publicación 3', 3);
-
-UNLOCK TABLES;
-
--- Table COMMENTS
-LOCK TABLES `comentarios` WRITE;
-INSERT INTO comentarios (usuario_id, fecha, informacion, publicacion_id)
-VALUES
-    (1, '2022-01-01', 'Comentario de UsuarioA en Publicación 1', 1),
-    (1, '2022-01-02', 'Comentario de UsuarioB en Publicación 2', 2),
-    (2, '2022-01-03', 'Comentario de UsuarioC en Publicación 3', 3);
-UNLOCK TABLES;
-
 -- Table BIDDERS
 LOCK TABLES `ofertantes` WRITE;
 INSERT INTO ofertantes (usuario_id, fecha_creacion, checker)
@@ -102,25 +83,6 @@ VALUES
     (1, 1, '2022-01-01', 1),
     (2, 2, '2022-01-02', 2),
     (2, 3, '2022-01-03', 3);
-
-UNLOCK TABLES;
-
-LOCK TABLES `usuario_evento_resenia` WRITE;
-INSERT INTO usuario_evento_resenia (puntuacion, evento_id, fecha_resenia, usuario_id, informacion)
-VALUES
-    (67, 1, '2022-01-01', 1, 'Buenisimo'),
-    (28, 2, '2022-01-02', 2, 'Mejorable'),
-    (89, 3, '2022-01-03', 3, 'Lo mejor');
-
-UNLOCK TABLES;
-
--- User-Event (Inscripctions)
-LOCK TABLES `resenias_usuarios_a_usuario` WRITE;
-INSERT INTO resenias_usuarios_a_usuario (valoracion, usuario_emisor_id, usuario_receptor_id)
-VALUES
-    (54, 1, 3),
-    (79, 1, 2),
-    (23, 2, 1);
 
 UNLOCK TABLES;
 

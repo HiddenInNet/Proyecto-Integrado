@@ -28,16 +28,12 @@ public class Etiqueta implements Serializable {
     private String nombre;
 
     @OneToMany(
-            mappedBy = "etiqueta",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            mappedBy = "etiqueta"
     )
     private Set<EtiquetaEvento> eventosEtiqueta = new HashSet<>();
 
     @OneToMany(
-            mappedBy = "etiqueta",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
+            mappedBy = "etiqueta"
     )
     private Set<EtiquetaUsuario> usuariosEtiqueta = new HashSet<>();
 

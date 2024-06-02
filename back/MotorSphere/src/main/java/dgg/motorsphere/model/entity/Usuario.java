@@ -3,7 +3,6 @@ package dgg.motorsphere.model.entity;
 
 import dgg.motorsphere.model.entity.relations.EtiquetaUsuario;
 import dgg.motorsphere.model.entity.relations.UsuarioInscritoEvento;
-import dgg.motorsphere.model.entity.relations.UsuarioUsuarioResenia;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.validator.constraints.Range;
@@ -12,6 +11,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -65,46 +65,11 @@ public class Usuario implements Serializable {
 
     // RELACIONES
 
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Publicacion> publicaciones = new HashSet<>();
-
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Comentario> comentarios = new HashSet<>();
-
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<UsuarioInscritoEvento> usuarioInscritoEventos = new HashSet<>();
-
-    // Resenias
-    @OneToMany(mappedBy = "usuarioEmisor")
-    private Set<UsuarioUsuarioResenia> reseniasEmitidas = new HashSet<>();
-
-    @OneToMany(mappedBy = "usuarioReceptor")
-    private Set<UsuarioUsuarioResenia> reseniasRecibidas = new HashSet<>();
 
     // Etiquetas
     @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<EtiquetaUsuario> etiquetasUsuario = new HashSet<>();
-
-    // HELPERS
-    public void addPublicacion(Publicacion publicacion) {
-        this.publicaciones.add(publicacion);
-        publicacion.setUsuario(this);
-    }
-
-    public void removePublicacion(Publicacion publicacion) {
-        this.publicaciones.remove(publicacion);
-        publicacion.setUsuario(null);
-    }
-
-    public void addComentario(Comentario comentario) {
-        this.comentarios.add(comentario);
-        comentario.setUsuario(this);
-    }
-
-    public void removeComentario(Comentario comentario) {
-        this.comentarios.remove(comentario);
-        comentario.setUsuario(null);
-    }
 
 }

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Register } from '../../../models/Register';
 import { AuthService } from '../../../services/auth.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -13,9 +13,10 @@ import { environment } from '../../../../environments/environment.development';
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
-export class RegisterComponent {
+export class RegisterComponent implements OnInit {
   public registerForm: Register = <Register>{};
   public terms: boolean = false;
+  public invalid: boolean = false;
 
   constructor(
     private peti: AuthService,
@@ -24,6 +25,10 @@ export class RegisterComponent {
     private authService: AuthService
   ) {}
 
+  ngOnInit(): void {
+    this.invalid = false;
+  }
+
   onSubmit(formValue: Register) {
     console.log('Valor del formulario register: ', formValue);
     if (!this.terms) {
@@ -31,16 +36,22 @@ export class RegisterComponent {
       return;
     }
     formValue.profileImage = environment.DEFAULT_PROFILE_IMAGE;
-    formValue.password = "qwerty"
 
-    this.authService.createUser(formValue).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.ruta.navigate(['/login'])
-      },
-      error: (err) => {
-        console.error(err);
-      },
-    });
+    if (formValue.password === formValue.password1) {
+      this.invalid = false;
+
+      this.authService.createUser(formValue).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.ruta.navigate(['/login']);
+        },
+        error: (err) => {
+          console.error(err);
+        },
+      });
+    } else {
+      this.invalid = true;
+      return;
+    }
   }
 }

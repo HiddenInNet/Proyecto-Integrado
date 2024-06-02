@@ -1,8 +1,8 @@
-<div class="flex flex-row border-4 rounded-lg my-4">
+<div class="flex flex-row border-4 rounded-lg my-4 min-h-screen">
     <aside class="rounded-l-sm md:w-1/4">
         <div class="flex flex-col justify-between h-full px-3 py-4 overflow-y-auto bg-silver rounded-l-sm">
             <div class="flex justify-start items-center gap-4">
-                <img class="w-10 h-10 rounded-full" src="" alt="">
+                <img [src]="profileImage" class="w-10 h-10 rounded-full" alt="">
                 <div class="font-medium dark:text-white">
                     <div>{{'@'+user.username}}</div>
                     <div class="text-sm text-gray-500 dark:text-gray-400">{{user.name + ' ' + user.lastName}}</div>
@@ -11,19 +11,45 @@
             </div>
             <ul class="space-y-2 mb-20 font-medium">
                 <li>
-                    <a class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
-                        <span class="ms-3">Dashboard</span>
-                    </a>
-
-                </li>
-                <li>
                     <a (click)="mostrar(1)"
                         class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
                         <span class="ms-3">Editar perfil</span>
                     </a>
                 </li>
+                @if (bidder !== null) {
                 <li>
-
+                    <a (click)="mostrar(2)"
+                        class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+                        <span class="ms-3">Mis eventos</span>
+                    </a>
+                </li>
+                <li>
+                    <a (click)="mostrar(3)"
+                        class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+                        <span class="ms-3">Cambiar cuenta a Usuario</span>
+                    </a>
+                </li>
+                @if (bidder.checker === false) {
+                <li>
+                    <a (click)="verifyAccount()"
+                        class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+                        <span class="ms-3">Verificar mi cuenta</span>
+                    </a>
+                </li>
+                }
+                } @else if (bidder === null) {
+                <li>
+                    <a (click)="mostrar(4)"
+                        class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">
+                        <span class="ms-3">Cambiar cuenta a Ofertante</span>
+                    </a>
+                </li>
+                }
+                <li>
+                    <a (click)="mostrar(5)"
+                        class="flex cursor-pointer items-center p-2 text-rose-700 rounded-lg hover:bg-gray-100">
+                        <span class="ms-3">Eliminar perfil</span>
+                    </a>
                 </li>
             </ul>
         </div>
@@ -33,6 +59,18 @@
         @switch (show) {
         @case (1) {
         <app-form-profile [user]="user"></app-form-profile>
+        }
+        @case (2) {
+        <app-my-events></app-my-events>
+        }
+        @case (3) {
+        <app-bidder-user [user]="user"></app-bidder-user>
+        }
+        @case (4) {
+        <app-user-bidder [user]="user"></app-user-bidder>
+        }
+        @case (5) {
+        <app-delete-profile [user]="user"></app-delete-profile>
         }
         }
 

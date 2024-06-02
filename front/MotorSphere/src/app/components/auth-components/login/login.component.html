@@ -17,11 +17,8 @@
                         class="shadow-sm rounded-md w-full px-3 py-2 border border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         placeholder="Password" required>
                     <div class="flex justify-between md:w-full">
-                        <a href="#"
-                            class="text-xs text-gray-600 hover:text-indigo-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">¿Has
-                            olvidado la contraseña?</a>
-                        <a href="#"
-                            class="text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Registrate</a>
+                        <a [routerLink]="'/register'"
+                            class="mt-2 text-xs text-indigo-500 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Registrate</a>
                     </div>
                 </div>
                 <div class="flex mb-3 items-start">

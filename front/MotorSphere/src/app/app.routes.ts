@@ -14,6 +14,7 @@ import { Title } from '@angular/platform-browser';
 import { IndividualEventComponent } from './components/main/individual-event/individual-event.component';
 import { authGuard } from './guards/auth.guard';
 import { TabProfileComponent } from './components/main/tab-profile/tab-profile.component';
+import { CreateEventComponent } from './components/custom/create-event/create-event.component';
 
 export const routes: Routes = [
     {
@@ -34,6 +35,10 @@ export const routes: Routes = [
     {
         path: "event/:id",
         component: IndividualEventComponent
+    },
+    {
+        path: "create-event",
+        component: CreateEventComponent
     },
     {
         path: "bidders",

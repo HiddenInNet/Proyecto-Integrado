@@ -1,12 +1,55 @@
 <div class="flex w-full my-4 rounded-lg border-4 bg-silver h-fit bg-opacity-20">
-    <div class="flex w-1/3 justify-center align-middle min-h-10 bg-slate-400">
-        <div class="p-4 m-4">
-            <img class="size-64" [src]="eventImage" alt="">
+    <div class="flex flex-col gap-10 w-1/3 justify-center align-middle min-h-10 bg-slate-100">
+        <div class="p-4 m-4 self-center">
+            <img class="size-72 rounded-lg shadow-xl dark:shadow-gray-800" [src]="eventImage" alt="image description">
+        </div>
+        <div class="self-center">
+            <h2 class="text-3xl font-bold">{{event.name}}</h2>
+        </div>
+        <div class="m-6">
+            <p class="text-justify">{{event.description}}</p>
+        </div>
+
+        <!-- Ofertante del evento -->
+        <div class="m-6">
+            <div class="flex items-center gap-4">
+                <img class="w-10 h-10 rounded-full" [src]="bidderProfileImage" alt="">
+                <div class="font-medium dark:text-white">
+                    <div>{{"@"+bidderUser.username}}</div>
+                    <div class="text-sm text-gray-500 dark:text-gray-400">{{bidderUser.name + " " +
+                        bidderUser.lastName}}</div>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="flex w-2/3 bg-amber-100 min-h-10">
-        <div id="map" class="">
-            
+    <div class="flex w-2/3 p-4 bg-silver min-h-10 flex-col gap-10">
+        <div class="flex-grow w-3/4 self-center">
+            @for (fecha of event.dates; track $index) {
+            <div class="flex w-full justify-between border-2 border-dashed border-white p-2 bg-slate-400 m-4">
+                <div class="flex w-1/3 justify-center self-center">
+                    {{fechasFormateadas[$index]}}
+                </div>
+                <div class="flex w-1/3 justify-center self-center">
+                    {{fecha.price + " €"}}
+                </div>
+                <div class="flex w-1/3 justify-end align-middle">
+                    <button type="button" class="bg-blue-700 hover:bg-blue-500 p-2 rounded-lg text-white">
+                        Apuntarse
+                    </button>
+                </div>
+            </div>
+            }
+        </div>
+        <div class="flex self-center">
+            <google-map height="500px" width="700px" [center]="center" [zoom]="zoom" (mapMousemove)="move($event)">
+                <map-marker [position]="center" #marker="mapMarker" (mapClick)="openInfoWindow(marker)">
+                </map-marker>
+                <map-info-window #infoWindow>
+                    <strong>{{ event.localization.municipality + ", " + event.localization.province + " (" +
+                        event.localization.country + ")" }}</strong><br>
+                    <strong>{{ event.localization.latitude + " " + event.localization.longitude}}</strong>
+                </map-info-window>
+            </google-map>
         </div>
     </div>
 </div>

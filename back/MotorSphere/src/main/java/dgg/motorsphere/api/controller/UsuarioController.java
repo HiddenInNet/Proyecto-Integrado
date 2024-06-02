@@ -56,6 +56,14 @@ public class UsuarioController {
         }
     }
 
+    @DeleteMapping("removeAll/{id}")
+    public ResponseEntity<?> removeAll(@PathVariable Long id){
+        Map<String, String> response = new HashMap<>();
+        String res = usuarioService.deleteUserById(id);
+        response.put("response", res);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
     @GetMapping("{id}")
     public ResponseEntity<?> getById(@PathVariable Long id){
         UsuarioDTO response = usuarioService.getById(id);

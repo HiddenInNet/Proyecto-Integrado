@@ -50,6 +50,6 @@ public class Fecha implements Serializable {
     @JoinColumn(name = "evento_id")
     private Evento evento;
 
-    @OneToMany(mappedBy = "fecha", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "fecha", orphanRemoval = true)
     private Set<UsuarioInscritoEvento> usuariosInscritosFecha = new HashSet<>();
 }

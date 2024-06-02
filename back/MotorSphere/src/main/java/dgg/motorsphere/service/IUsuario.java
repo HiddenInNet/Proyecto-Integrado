@@ -15,6 +15,8 @@ public interface IUsuario {
     UsuarioDTO insert(UsuarioInsertDTO UsuarioInsertDTO);
     boolean remove(Long id);
 
+    String deleteUserById(Long id);
+
     // UserWithPublicationsDTO getUserPublications(Long id);
 
     // Métodos auxiliares

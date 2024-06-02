@@ -7,6 +7,7 @@ import { User } from '../../../models/User';
 import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
 import { LogService } from '../../../services/log.service';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-header',
@@ -32,7 +33,8 @@ export class HeaderComponent implements OnInit {
   constructor(
     private peti: UserService,
     private ruta: Router,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private dataService: DataService
   ) {}
 
   ngOnInit(): void {

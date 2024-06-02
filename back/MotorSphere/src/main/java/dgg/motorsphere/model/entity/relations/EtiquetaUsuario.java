@@ -8,19 +8,16 @@ import lombok.*;
 import java.io.Serializable;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
 @ToString
-@Builder
+@Entity
 @Getter
 @Setter
-@Entity
 @Table(name = "etiquetas_usuarios")
 public class EtiquetaUsuario implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name = "etiqueta_id")

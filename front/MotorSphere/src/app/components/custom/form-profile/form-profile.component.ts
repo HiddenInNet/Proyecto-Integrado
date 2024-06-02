@@ -3,6 +3,7 @@ import { User } from '../../../models/User';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { AuthService } from '../../../services/auth.service';
+import { DataService } from '../../../services/data.service';
 
 @Component({
   selector: 'app-form-profile',
@@ -19,6 +20,7 @@ export class FormProfileComponent implements OnInit {
 
   private userService: UserService = inject(UserService);
   private authService: AuthService = inject(AuthService);
+  private dataService: DataService = inject(DataService);
 
   ngOnInit(): void {
     this.formUser = { ...this.user };
@@ -42,7 +44,6 @@ export class FormProfileComponent implements OnInit {
     user.id = this.formUser.id;
     user.profileDate = this.formUser.profileDate;
     user.profileImage = this.formUser.profileImage;
-
     console.log('Usuario actualizado', user);
 
     // Convertir la fecha de nacimiento a un formato aceptable por el backend
@@ -52,6 +53,7 @@ export class FormProfileComponent implements OnInit {
       next: (data) => {
         console.log('Nuevo usuario: ', data);
         this.user = data;
+        this.dataService.setUser(user)
         this.authService.setCookie('user', String(data));
       },
       error: (err) => {

@@ -44,4 +44,10 @@ export class UserService {
     const route = link;
     return this.http.get(route, { responseType: 'blob' });
   }
+
+  removeUser(id: number) {
+    console.log('dentro de eliminacion de usuario: ', id);
+    const route = this.SERVER_URL + `/usuario/removeAll/${id}`;
+    return this.http.delete(route);
+  }
 }

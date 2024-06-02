@@ -1,5 +1,6 @@
 package dgg.motorsphere.service;
 
+import dgg.motorsphere.api.dto.evento.CreateEventoDTO;
 import dgg.motorsphere.api.dto.evento.EventoDTO;
 import dgg.motorsphere.model.entity.Evento;
 
@@ -10,7 +11,7 @@ public interface IEvento {
     List<EventoDTO> getAll();
     EventoDTO getById(Long id);
     EventoDTO update(EventoDTO eventoDTO);
-    EventoDTO insert(EventoDTO eventoDTO);
+    EventoDTO insert(CreateEventoDTO createEventoDTO);
     boolean remove(Long id);
 
     // Helper

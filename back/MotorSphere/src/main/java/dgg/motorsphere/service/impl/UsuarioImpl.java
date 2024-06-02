@@ -2,10 +2,13 @@ package dgg.motorsphere.service.impl;
 
 import dgg.motorsphere.api.dto.usuario.UsuarioDTO;
 import dgg.motorsphere.api.dto.usuario.UsuarioUpdateDTO;
-import dgg.motorsphere.model.dao.UserDAO;
-import dgg.motorsphere.model.dao.UsuarioDAO;
+import dgg.motorsphere.model.dao.*;
 import dgg.motorsphere.api.dto.usuario.UsuarioInsertDTO;
-import dgg.motorsphere.model.entity.Usuario;
+import dgg.motorsphere.model.entity.*;
+import dgg.motorsphere.model.entity.relations.EtiquetaEvento;
+import dgg.motorsphere.model.entity.relations.EtiquetaUsuario;
+import dgg.motorsphere.model.entity.relations.UsuarioInscritoEvento;
+import dgg.motorsphere.service.IOfertante;
 import dgg.motorsphere.service.IUsuario;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
@@ -26,6 +29,24 @@ public class UsuarioImpl implements IUsuario {
     private UsuarioDAO usuarioDAO;
     @Autowired
     private UserDAO userDAO;
+    @Autowired
+    private OfertanteDAO ofertanteDAO;
+    @Autowired
+    private IOfertante ofertanteService;
+    @Autowired
+    private EventoDAO eventoDAO;
+    @Autowired
+    private LocalizacionDAO localizacionDAO;
+    @Autowired
+    private FechaDAO fechaDAO;
+    @Autowired
+    private InsigniaDAO insigniaDAO;
+    @Autowired
+    private EtiquetaEventoDAO etiquetaEventoDAO;
+    @Autowired
+    private UsuarioInscritoEventoDAO usuarioInscritoEventoDAO;
+    @Autowired
+    private EtiquetaUsuarioDAO etiquetaUsuarioDAO;
 
     @Transactional
     @Override
@@ -119,6 +140,54 @@ public class UsuarioImpl implements IUsuario {
             }
         }
         return false;
+    }
+
+    @Override
+    @Transactional
+    public String deleteUserById(Long id) {
+        if (id != null) {
+            Usuario usuario = usuarioDAO.findById(id).orElse(null);
+            Ofertante ofertante = ofertanteDAO.findByUsuarioId(id).orElse(null);
+
+            if (ofertante != null) {
+                // Eliminar eventos relacionados y sus dependencias
+                for (Evento evento : ofertante.getEventos()) {
+                    // Eliminar usuarios inscritos en el evento
+                    for (UsuarioInscritoEvento usuarioInscritoEvento : evento.getUsuariosInscritosEvento()) {
+                        usuarioInscritoEventoDAO.deleteById(usuarioInscritoEvento.getId());
+                    }
+                    // Eliminar etiquetas del evento
+                    for (EtiquetaEvento etiquetaEvento : evento.getEtiquetasEvento()) {
+                        etiquetaEventoDAO.deleteById(etiquetaEvento.getId());
+                    }
+                    // Eliminar fechas del evento
+                    for (Fecha fecha : evento.getFechas()) {
+                        fechaDAO.deleteById(fecha.getId());
+                    }
+                    // Eliminar localización del evento
+                    if (evento.getLocalizacion() != null) {
+                        localizacionDAO.deleteById(evento.getLocalizacion().getId());
+                    }
+                    // Eliminar insignia del evento
+                    if (evento.getInsignia() != null) {
+                        insigniaDAO.deleteById(evento.getInsignia().getId());
+                    }
+                    // Eliminar el evento
+                    eventoDAO.deleteById(evento.getId());
+                }
+
+                // Finalmente, eliminar el ofertante
+                ofertanteDAO.deleteById(ofertante.getId());
+            }
+
+            //Borrar usuario
+            etiquetaUsuarioDAO.deleteByUsuarioId(id);
+            userDAO.deleteByUsername(usuario.getUser().getUsername());
+            usuarioDAO.deleteById(id);
+
+            return "Se ha borrado correctamente";
+        }
+        return "Error id null";
     }
 
     /*

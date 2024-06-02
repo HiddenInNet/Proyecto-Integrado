@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 import { Event } from '../models/Event';
+import { CreateEventForm } from '../models/CreateEventForm';
 
 @Injectable({
   providedIn: 'root',
@@ -19,5 +20,10 @@ export class EventService {
   getEventById(id: number) {
     const route = this.SERVER_URL + '/evento/' + id;
     return this.http.get<Event>(route);
+  }
+
+  addEvent(data: CreateEventForm) {
+    const route = this.SERVER_URL + '/evento/add';
+    return this.http.post<Event>(route, data);
   }
 }

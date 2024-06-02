@@ -10,7 +10,8 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.io.Serializable;
 import java.util.*;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -36,7 +37,7 @@ public class Evento implements Serializable {
     @DateTimeFormat(pattern = "dd-MM-yyyy HH:mm:ss")
     private Date fechaAnuncioEvento;
 
-    @Column(name = "puntuacion", unique = false, nullable = false)
+    @Column(name = "puntuacion")
     @Range(min = 0, max = 100)
     private Integer puntuacion;
 
@@ -44,15 +45,11 @@ public class Evento implements Serializable {
     @Range(min = 0, max = 100)
     private Integer exigencia;
 
-
-    // Relaciones
-
-
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "localizacion_id", referencedColumnName = "id")
     private Localizacion localizacion;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "insignia_id", referencedColumnName = "id")
     private Insignia insignia;
 
@@ -60,43 +57,26 @@ public class Evento implements Serializable {
     @JoinColumn(name = "ofertante_id")
     private Ofertante ofertante;
 
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "evento")
     private Set<UsuarioInscritoEvento> usuariosInscritosEvento = new HashSet<>();
 
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "evento", orphanRemoval = true)
     private Set<Fecha> fechas = new HashSet<>();
 
-    @OneToMany(mappedBy = "evento", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "evento", orphanRemoval = true)
     private Set<EtiquetaEvento> etiquetasEvento = new HashSet<>();
 
-    /*
-    public void setInsignia(Insignia insignia){
-        insignia.setEvento(this);
-        this.insignia = insignia;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Evento evento = (Evento) o;
+        return Objects.equals(id, evento.id);
     }
 
-    public void removeInsignia() {
-        if (this.insignia != null){
-            this.insignia.setEvento(null);
-            this.insignia = null;
-        }
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
     }
-
-    // Métodos Helpers
-    public void addFechaInscripcion(Usuario usuario, Date date) {
-        UsuarioInscritoEvento usuarioInscritoEvento = UsuarioInscritoEvento.builder()
-                .usuario(usuario)
-                .evento(this)
-                .fechaInscripcion(date)
-                .build();
-        this.usuariosInscritosEvento.add(usuarioInscritoEvento);
-        usuario.getUsuarioInscritoEventos().add(usuarioInscritoEvento);
-    }
-
-    public void removeFechaInscripcion(Usuario usuario) {
-        UsuarioInscritoEvento usuarioInscritoEvento = new UsuarioInscritoEvento(usuario, this);
-        usuario.getUsuarioInscritoEventos().remove(usuarioInscritoEvento);
-        this.usuariosInscritosEvento.remove(usuarioInscritoEvento);
-    }
-    */
 }
+

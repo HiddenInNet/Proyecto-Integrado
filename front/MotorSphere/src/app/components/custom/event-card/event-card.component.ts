@@ -23,6 +23,7 @@ export class EventCardComponent implements OnInit {
   public eventImage: string | ArrayBuffer | null = null;
 
   ngOnInit(): void {
+    console.log("Event: ", this.event)
     console.log('Imagen del evento: ', this.event.image);
     this.userService.getImage(this.event.image).subscribe(
       (data: Blob) => {
@@ -36,14 +37,6 @@ export class EventCardComponent implements OnInit {
         console.error('Error al obtener la imagen:', error);
       }
     );
-  }
-
-  getStarArray(score: number): Array<number> {
-    const filledStars = Math.floor(score / 20);
-    const halfStar = score % 20 >= 10 ? 1 : 0;
-    return new Array(filledStars + halfStar)
-      .fill(1)
-      .concat(new Array(5 - filledStars - halfStar).fill(0));
   }
 
   getAllPlaces(): number {

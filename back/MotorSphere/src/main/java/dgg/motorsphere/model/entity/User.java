@@ -20,9 +20,6 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long userId;
 
-    @OneToOne(mappedBy = "user")
-    private Usuario usuario;
-
     @Column(name = "username", unique = true, nullable = false)
     private String username;
 

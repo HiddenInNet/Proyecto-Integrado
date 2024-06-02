@@ -1,7 +1,10 @@
 package dgg.motorsphere.api.controller;
 
+import dgg.motorsphere.api.dto.ofertante.CheckOfertanteDTO;
 import dgg.motorsphere.api.dto.ofertante.OfertanteDTO;
+import dgg.motorsphere.api.dto.ofertante.OfertanteUsuarioDTO;
 import dgg.motorsphere.service.IOfertante;
+import org.apache.coyote.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,9 +34,30 @@ public class OfertanteController {
         }
     }
 
+    @GetMapping("getById/{id}")
+    public ResponseEntity<?> getBidderByEventId(@PathVariable Long id){
+        OfertanteUsuarioDTO response = ofertanteService.getById(id);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+
     @PostMapping("add")
     public ResponseEntity<?> create(@RequestBody OfertanteDTO ofertanteDTO){
         OfertanteDTO response = ofertanteService.insert(ofertanteDTO);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping("/removeByUserId/{id}")
+    public ResponseEntity<?> removeBidderByUserId(@PathVariable Long id){
+        String response = ofertanteService.removeByUserId(id);
+        Map<String, String> res = new HashMap<>();
+        res.put("response", response);
+        return new ResponseEntity<>(res, HttpStatus.OK);
+    }
+
+    @PutMapping("/checker")
+    public ResponseEntity<?> checker(@RequestBody CheckOfertanteDTO checkOfertanteDTO){
+        OfertanteDTO response = ofertanteService.setChecker(checkOfertanteDTO);
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

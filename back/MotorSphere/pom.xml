@@ -11,6 +11,7 @@
 	<groupId>dgg</groupId>
 	<artifactId>MotorSphere</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<packaging>jar</packaging>
 	<name>MotorSphere</name>
 	<description>MotorSphere</description>
 	<properties>

@@ -30,7 +30,6 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit(formValue: Register) {
-    console.log('Valor del formulario register: ', formValue);
     if (!this.terms) {
       alert('Debe aceptar los términos y condiciones para registrarse.');
       return;
@@ -42,11 +41,9 @@ export class RegisterComponent implements OnInit {
 
       this.authService.createUser(formValue).subscribe({
         next: (data) => {
-          console.log(data);
           this.ruta.navigate(['/login']);
         },
         error: (err) => {
-          console.error(err);
         },
       });
     } else {

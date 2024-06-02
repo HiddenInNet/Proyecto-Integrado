@@ -23,8 +23,6 @@ export class EventCardComponent implements OnInit {
   public eventImage: string | ArrayBuffer | null = null;
 
   ngOnInit(): void {
-    console.log("Event: ", this.event)
-    console.log('Imagen del evento: ', this.event.image);
     this.userService.getImage(this.event.image).subscribe(
       (data: Blob) => {
         const reader = new FileReader();
@@ -34,7 +32,6 @@ export class EventCardComponent implements OnInit {
         reader.readAsDataURL(data);
       },
       (error) => {
-        console.error('Error al obtener la imagen:', error);
       }
     );
   }

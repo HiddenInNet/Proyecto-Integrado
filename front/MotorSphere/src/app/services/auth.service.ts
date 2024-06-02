@@ -26,7 +26,6 @@ export class AuthService {
   }
 
   login(login: Login) {
-    console.log('Dentro de login (service)', login);
 
     const params = {
       username: login.username,
@@ -45,7 +44,6 @@ export class AuthService {
   }
 
   createUser(registerUser: Register) {
-    console.log('Creando usuario: ', registerUser.username);
 
     const params = {
       username: registerUser.username,
@@ -62,7 +60,6 @@ export class AuthService {
 
     const route = this.SERVER_URL + `/auth/register`;
 
-    console.log('Mandando al servidor: ', params);
     return this.http.post<any>(route, params);
   }
 
@@ -79,9 +76,6 @@ export class AuthService {
 
   setCookie(name: string, value: string) {
     if (this.cookie.get(name)) {
-      console.log(
-        `Actualizando cookie: ${name} : ${this.cookie.get(name)} <==> ${value}`
-      );
       this.cookie.delete(name);
       this.cookie.set(name, value);
     } else {

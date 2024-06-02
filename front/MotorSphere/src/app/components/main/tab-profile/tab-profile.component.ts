@@ -38,6 +38,8 @@ export class TabProfileComponent implements OnInit {
   public profileImage: string | ArrayBuffer | null = null;
   public bidder: Bidder | null = null;
 
+  public check: boolean = false;
+
   public userBirthDate: string = '';
   public show: number = 0;
 
@@ -50,7 +52,6 @@ export class TabProfileComponent implements OnInit {
 
     this.userService.getUserById(user_id).subscribe({
       next: (data) => {
-        console.log('Profile user: ', data);
         this.user = data;
         this.userBirthDate = this.setDate(data);
 
@@ -59,12 +60,10 @@ export class TabProfileComponent implements OnInit {
             const reader = new FileReader();
             reader.onload = () => {
               this.profileImage = reader.result;
-              console.log('Imagen de perfil: ', !!reader.result);
             };
             reader.readAsDataURL(data);
           },
           (error) => {
-            console.error('Error al obtener la imagen:', error);
           }
         );
       },
@@ -72,10 +71,8 @@ export class TabProfileComponent implements OnInit {
 
     if (!!this.authService.getCookie('bidder')) {
       this.bidder = JSON.parse(this.authService.getCookie('bidder'));
-      console.log('Hola ', this.bidder);
     } else {
       this.bidder = null;
-      console.log('No es un ofertante');
     }
   }
 
@@ -103,10 +100,9 @@ export class TabProfileComponent implements OnInit {
         .subscribe({
           next: (data) => {
             this.bidder = this.bidder;
-            console.log(data);
+            this.check = data.checker;
           },
           error: (err) => {
-            console.error(err);
           },
         });
     }

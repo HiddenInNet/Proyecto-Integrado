@@ -13,7 +13,6 @@ export class UserService {
   constructor(private http: HttpClient) {}
 
   getUserById(id: number) {
-    console.log(`getUserById(${id})`);
 
     const route = this.SERVER_URL + `/usuario/${id}`;
 
@@ -21,7 +20,6 @@ export class UserService {
   }
 
   updateUser(user: User) {
-    console.log('Actualizando usuario: ', user.id);
 
     const params = {
       id: user.id,
@@ -40,13 +38,11 @@ export class UserService {
   }
 
   getImage(link: string) {
-    console.log('Obteniendo imagen: ', link);
     const route = link;
     return this.http.get(route, { responseType: 'blob' });
   }
 
   removeUser(id: number) {
-    console.log('dentro de eliminacion de usuario: ', id);
     const route = this.SERVER_URL + `/usuario/removeAll/${id}`;
     return this.http.delete(route);
   }

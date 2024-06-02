@@ -33,18 +33,15 @@ export class LoginComponent implements OnInit {
   }
 
   onSubmit(loginForm: Login) {
-    console.log('Dentro de onSubmit: Data -> ', loginForm);
 
     this.peti.login(loginForm).subscribe({
       next: (data) => {
-        console.log('Respuesta de login: ', data);
         this.logService.isLoggedIn$.next(true);
         this.peti.setCookie('user_jwt', data.jwt);
         this.peti.setCookie('user_id', String(data.userId));
 
         this.bidderService.getBidderByUserId(data.userId).subscribe({
           next: (data) => {
-            console.log('Es un ofertante: ', data);
             this.dataService.setBidder(true);
             this.dataService.setOfertante(data);
           },
@@ -56,7 +53,6 @@ export class LoginComponent implements OnInit {
         this.ruta.navigate(['home']);
       },
       error: (error) => {
-        console.log(error);
         this.invalid = true;
       },
     });

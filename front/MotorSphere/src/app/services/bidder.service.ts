@@ -13,7 +13,6 @@ export class BidderService {
   constructor(private http: HttpClient) {}
 
   getBidderByUserId(id: number) {
-    console.log('Obteniendo ofertante: ', id);
 
     const route = this.SERVER_URL + `/ofertante/getByUserId/${id}`;
 
@@ -21,7 +20,6 @@ export class BidderService {
   }
 
   getBidderById(id: number) {
-    console.log('Obteniendo ofertante con usuario: ', id);
 
     const route = this.SERVER_URL + `/ofertante/getById/${id}`;
 
@@ -29,7 +27,6 @@ export class BidderService {
   }
 
   createBidder(user: User) {
-    console.log('Creando un nuevo ofertante con userId: ', user.id);
 
     const params = {
       userId: user.id,
@@ -42,7 +39,6 @@ export class BidderService {
   }
 
   removeBidder(id: number) {
-    console.log('Eliminando ofertante con userId: ', id);
 
     const route = this.SERVER_URL + `/ofertante/removeByUserId/${id}`;
 
@@ -50,7 +46,6 @@ export class BidderService {
   }
 
   setChecker(id: number, checker: boolean) {
-    console.log('Cambiando checker');
     const params = {
       bidderId: id,
       checker: checker

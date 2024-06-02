@@ -26,7 +26,6 @@ export class BidderUserComponent implements OnInit {
   removeBidder() {
     this.bidderService.removeBidder(this.user.id).subscribe({
       next: (data) => {
-        console.log('Eliminacion bidder: ', data);
         this.authService.removeCookie('bidder');
         this.dataService.setBidder(false);
         this.router.navigate(['/home']);

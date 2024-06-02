@@ -42,12 +42,10 @@ export class HeaderComponent implements OnInit {
       this.logged = this.authService.isLogged();
 
       if (this.logged) {
-        console.log('logged ?: ', this.logged);
         this.peti
           .getUserById(parseInt(this.authService.getCookie('user_id')))
           .subscribe({
             next: (data) => {
-              console.log('Datos usuario: ', data);
               this.user = data;
               this.authService.setCookie('user', JSON.stringify(data));
 
@@ -57,12 +55,10 @@ export class HeaderComponent implements OnInit {
                     const reader = new FileReader();
                     reader.onload = () => {
                       this.profileImage = reader.result;
-                      console.log('Imagen de perfil: ', !!reader.result);
                     };
                     reader.readAsDataURL(data);
                   },
                   (error) => {
-                    console.error('Error al obtener la imagen:', error);
                   }
                 );
               }

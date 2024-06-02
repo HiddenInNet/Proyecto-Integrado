@@ -15,10 +15,6 @@ export class HomeComponent {
   constructor(public loadingService: LoadingService) {}
 
   ngOnInit(): void {
-    // this.loadingService.isLoading =true;
-    // setTimeout(() => {
-    //   console.log("dentro: ",false)
-    //   this.loadingService.isLoading = false;
-    // }, 1000);
+    
   }
 }

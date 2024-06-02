@@ -11,6 +11,7 @@ import {
 } from '@angular/google-maps';
 import { BidderService } from '../../../services/bidder.service';
 import { BidderUser } from '../../../models/BidderUser';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-individual-event',
@@ -25,6 +26,7 @@ export class IndividualEventComponent implements OnInit {
   public bidderUser: BidderUser = <BidderUser>{};
   public bidderProfileImage: string | ArrayBuffer | null = null;
   public fechasFormateadas: Array<String> = [];
+  public apuntado: boolean = false;
 
   public lat: number = 0;
   public lng: number = 0;
@@ -35,6 +37,7 @@ export class IndividualEventComponent implements OnInit {
   private route: ActivatedRoute = inject(ActivatedRoute);
   private eventService: EventService = inject(EventService);
   private bidderService: BidderService = inject(BidderService);
+  private authService: AuthService = inject(AuthService);
 
   display: any;
   center: google.maps.LatLngLiteral = {
@@ -45,15 +48,13 @@ export class IndividualEventComponent implements OnInit {
 
   ngOnInit(): void {
     const eventId = this.route.snapshot.params['id'];
-    console.log(this.event);
+    this.apuntado = false;
 
     this.eventService.getEventById(eventId).subscribe({
       next: (data) => {
-        console.log('Evento con id ' + eventId, data);
         this.event = data;
         this.lat = Number(this.event.localization.latitude);
         this.lng = Number(this.event.localization.longitude);
-        console.log(`Latitud: ${this.lat} longitud: ${this.lng}`);
 
         // Update the center of the map
         this.center = {
@@ -71,7 +72,6 @@ export class IndividualEventComponent implements OnInit {
         if (this.event) {
           this.bidderService.getBidderById(this.event.bidderId).subscribe({
             next: (data) => {
-              console.log('Datos obtenidos', data);
               this.bidderUser = data;
 
               if (data) {
@@ -82,19 +82,14 @@ export class IndividualEventComponent implements OnInit {
                       const reader = new FileReader();
                       reader.onload = () => {
                         this.bidderProfileImage = reader.result;
-                        console.log('Imagen de perfil: ', !!reader.result);
                       };
                       reader.readAsDataURL(data);
                     },
-                    (error) => {
-                      console.error('Error al obtener la imagen:', error);
-                    }
+                    (error) => {}
                   );
               }
             },
-            error: (err) => {
-              console.error(err);
-            },
+            error: (err) => {},
           });
 
           this.userService.getImage(this.event.image).subscribe(
@@ -102,19 +97,14 @@ export class IndividualEventComponent implements OnInit {
               const reader = new FileReader();
               reader.onload = () => {
                 this.eventImage = reader.result;
-                console.log('Imagen de perfil: ', !!reader.result);
               };
               reader.readAsDataURL(data);
             },
-            (error) => {
-              console.error('Error al obtener la imagen:', error);
-            }
+            (error) => {}
           );
         }
       },
-      error: (err) => {
-        console.log(err);
-      },
+      error: (err) => {},
     });
   }
 
@@ -126,6 +116,8 @@ export class IndividualEventComponent implements OnInit {
   move(event: google.maps.MapMouseEvent) {
     if (event.latLng != null) this.display = event.latLng.toJSON();
   }
+
+  change() {}
 
   formatDateForDateInput(dateString: string): string {
     const date = new Date(dateString);

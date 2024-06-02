@@ -52,7 +52,6 @@ export class CreateEventComponent implements OnInit {
   }
 
   onSubmit(createForm: any) {
-    console.log('CreateForm; ', createForm);
     const response: CreateEventForm = {
       bidderId: this.bidder.id,
       name: createForm.name,
@@ -84,15 +83,11 @@ export class CreateEventComponent implements OnInit {
       exigency: createForm.exigency,
     };
 
-    console.log(response);
-
     this.eventService.addEvent(response).subscribe({
       next: (data) => {
-        console.log(data);
         this.ruta.navigate(['/home']);
       },
       error: (err) => {
-        console.error(err);
       },
     });
   }
@@ -121,9 +116,6 @@ export class CreateEventComponent implements OnInit {
             municipality: this.locationData.city,
           };
         } else {
-          console.error(
-            'Geocode was not successful for the following reason: ' + status
-          );
         }
       }
     });
@@ -149,8 +141,6 @@ export class CreateEventComponent implements OnInit {
         locationData.country = component.long_name;
       }
     });
-
-    console.log(locationData);
 
     return locationData;
   }

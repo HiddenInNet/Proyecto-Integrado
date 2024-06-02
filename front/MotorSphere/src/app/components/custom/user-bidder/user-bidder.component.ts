@@ -22,20 +22,17 @@ export class UserBidderComponent implements OnInit {
   private authService: AuthService = inject(AuthService);
 
   ngOnInit(): void {
-    console.log('Usuario: ', this.user);
   }
 
   createBidder() {
     this.bidderService.createBidder(this.user).subscribe({
       next: (data) => {
-        console.log('Respuesta nuevo ofertante insertado: ', data);
         this.authService.setCookie('bidder', JSON.stringify(data));
         this.dataService.setBidder(true);
         this.dataService.setOfertante(data);
         this.router.navigate(['/home']);
       },
       error: (err) => {
-        console.error('Error de insercion', err);
       },
     });
   }

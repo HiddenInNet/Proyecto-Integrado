@@ -29,7 +29,6 @@ export class FormProfileComponent implements OnInit {
     this.formUser.birthDate = this.formatDateForDateInput(this.user.birthDate);
     this.formattedBirthDate = this.formatDateForDateInput(this.user.birthDate);
 
-    console.log('Fecha de nacimiento formateada:', this.formattedBirthDate);
   }
 
   formatDateForDateInput(dateString: string): string {
@@ -44,26 +43,22 @@ export class FormProfileComponent implements OnInit {
     user.id = this.formUser.id;
     user.profileDate = this.formUser.profileDate;
     user.profileImage = this.formUser.profileImage;
-    console.log('Usuario actualizado', user);
 
     // Convertir la fecha de nacimiento a un formato aceptable por el backend
     user.birthDate = new Date(this.formUser.birthDate).toISOString();
 
     this.userService.updateUser(user).subscribe({
       next: (data) => {
-        console.log('Nuevo usuario: ', data);
         this.user = data;
         this.dataService.setUser(user)
         this.authService.setCookie('user', String(data));
       },
       error: (err) => {
-        console.log('Error: ', err);
       },
     });
   }
 
   cancel() {
-    console.log('Cancelado');
     this.formUser = { ...this.user };
     this.formUser.birthDate = this.formatDateForDateInput(this.user.birthDate);
     this.formattedBirthDate = this.formatDateForDateInput(this.user.birthDate);

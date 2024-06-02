@@ -24,12 +24,10 @@ export class DeleteProfileComponent implements OnInit {
   removeProfile() {
     this.userService.removeUser(this.user.id).subscribe({
       next: (data) => {
-        console.log(data);
         this.authService.removeAllCookies();
         this.ruta.navigate(['/login']);
       },
       error: (err) => {
-        console.error(err);
       },
     });
   }

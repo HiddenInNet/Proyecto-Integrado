@@ -19,8 +19,6 @@ export class TabEventsComponent implements OnInit {
   ngOnInit(): void {
     this.eventService.getAllEvents().subscribe({
       next: (data) => {
-        console.log(data);
-        console.log('Eventos: ', data)
         this.events = data;
       },
     });

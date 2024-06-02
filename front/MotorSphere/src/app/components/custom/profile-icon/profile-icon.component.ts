@@ -32,7 +32,6 @@ export class ProfileIconComponent implements OnInit {
 
   ngOnInit(): void {
     this.dataService.bidder$.subscribe((data) => {
-      console.log('bidderbool: ', data);
       this.bidderBool = data;
     });
 
@@ -40,11 +39,9 @@ export class ProfileIconComponent implements OnInit {
     if (!isNaN(userId)) {
       this.bidderService.getBidderByUserId(userId).subscribe({
         next: (data) => {
-          console.log('Resultado: ', data);
           if (data !== null) {
             this.dataService.setBidder(true);
             this.bidder = data;
-            console.log('Bidder: ', data);
             this.authService.setCookie('bidder', JSON.stringify(data));
           } else {
             this.bidder = null;
@@ -52,17 +49,13 @@ export class ProfileIconComponent implements OnInit {
           }
         },
         error: (err) => {
-          console.log(err);
         },
       });
     } else {
-      console.error('Invalid user_id from cookies');
     }
   }
 
   showHide() {
-    console.log(this.show);
-    console.log(this.user);
     this.show = !this.show;
   }
 

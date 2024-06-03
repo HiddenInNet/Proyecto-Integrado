@@ -55,7 +55,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         );
 
         http.authorizeHttpRequests(auth -> auth
-                .requestMatchers("/api/v0/auth/**")
+                .requestMatchers("/**")
                 .permitAll()
                 .anyRequest().authenticated());
 

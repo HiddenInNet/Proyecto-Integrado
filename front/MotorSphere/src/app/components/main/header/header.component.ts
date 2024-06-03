@@ -39,9 +39,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.logService.isLoggedIn$.subscribe((res) => {
-      this.logged = this.authService.isLogged();
-
-      if (this.logged) {
+      this.dataService.user$.subscribe((response) => {
+        this.logged = this.authService.isLogged();
+      if (this.logged && response.id !== 0) {
         this.peti
           .getUserById(parseInt(this.authService.getCookie('user_id')))
           .subscribe({
@@ -65,6 +65,7 @@ export class HeaderComponent implements OnInit {
             },
           });
       }
+      })
     });
   }
 }

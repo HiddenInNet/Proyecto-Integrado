@@ -13,6 +13,7 @@ import {
 import { EventService } from '../../../services/event.service';
 import { environment } from '../../../../environments/environment.development';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-create-event',
@@ -40,15 +41,22 @@ export class CreateEventComponent implements OnInit {
   locationData: any = {};
   //
 
+  private authService: AuthService = inject(AuthService);
   private geoCoder: MapGeocoder = inject(MapGeocoder);
   private dataService: DataService = inject(DataService);
   private eventService: EventService = inject(EventService);
   private ruta: Router = inject(Router);
 
   ngOnInit(): void {
+    this.bidder = this.dataService.getOfertante();
+
+    this.bidder = JSON.parse(this.authService.getCookie('bidder'));
+    /*
     this.dataService.ofertante$.subscribe((data) => {
       this.bidder = data;
     });
+    */
+    console.log(this.bidder);
   }
 
   onSubmit(createForm: any) {
@@ -87,8 +95,7 @@ export class CreateEventComponent implements OnInit {
       next: (data) => {
         this.ruta.navigate(['/home']);
       },
-      error: (err) => {
-      },
+      error: (err) => {},
     });
   }
 

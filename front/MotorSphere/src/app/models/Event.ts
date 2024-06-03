@@ -14,3 +14,10 @@ export interface Event {
   score: number;
   exigency: number;
 }
+
+export interface AddUserToEvent {
+  userId: number;
+  eventId: number;
+  incriptionDate: string | null;
+  fechaId: number;
+}

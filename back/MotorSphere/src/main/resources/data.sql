@@ -23,9 +23,9 @@ UNLOCK TABLES;
 LOCK TABLES `insignias` WRITE;
 INSERT INTO `insignias` (valor, imagen, nombre)
 VALUES
-    (1, 'http://localhost:8081/api/v0/media/logo.webp', 'Nombre insignia 1'),
-    (3, 'http://localhost:8081/api/v0/media/logo.webp', 'Nombre insignia 2'),
-    (5, 'http://localhost:8081/api/v0/media/logo.webp', 'Nombre insginia 3');
+    (1, 'http://localhost:8080/api/v0/media/logo.webp', 'Nombre insignia 1'),
+    (3, 'http://localhost:8080/api/v0/media/logo.webp', 'Nombre insignia 2'),
+    (5, 'http://localhost:8080/api/v0/media/logo.webp', 'Nombre insginia 3');
 UNLOCK TABLES;
 
 -- Table Localizacion
@@ -41,9 +41,9 @@ UNLOCK TABLES;
 LOCK TABLES `usuarios` WRITE;
 INSERT INTO `usuarios` (user_id, email, nombre, apellidos, fecha_nacimiento, telefono, fecha_creacion_perfil, biografia, imagen_perfil, puntuacion)
 VALUES
-    (1, 'usuario1@example.com', 'Juan', 'Pérez', '1990-05-15','660536475', '2022-01-01', 'Biografía de Juan Pérez', 'http://localhost:8081/api/v0/media/logo.webp', 56),
-    (2, 'usuario2@example.com', 'María', 'Gómez', '1985-08-25','626137535', '2022-01-02', 'Biografía de María Gómez', 'http://localhost:8081/api/v0/media/logo.webp', 70),
-    (3, 'usuario3@example.com', 'Carlos', 'López', '1998-12-10','637536826', '2022-01-03', 'Biografía de Carlos López', 'http://localhost:8081/api/v0/media/logo.webp', 10);
+    (1, 'usuario1@example.com', 'Juan', 'Pérez', '1990-05-15','660536475', '2022-01-01', 'Biografía de Juan Pérez', 'http://localhost:8080/api/v0/media/logo.webp', 56),
+    (2, 'usuario2@example.com', 'María', 'Gómez', '1985-08-25','626137535', '2022-01-02', 'Biografía de María Gómez', 'http://localhost:8080/api/v0/media/logo.webp', 70),
+    (3, 'usuario3@example.com', 'Carlos', 'López', '1998-12-10','637536826', '2022-01-03', 'Biografía de Carlos López', 'http://localhost:8080/api/v0/media/logo.webp', 10);
 
 UNLOCK TABLES;
 
@@ -60,9 +60,9 @@ UNLOCK TABLES;
 LOCK TABLES `eventos` WRITE;
 INSERT INTO eventos (nombre, descripcion, imagen, fecha_anuncio_evento, ofertante_id, exigencia, puntuacion, insignia_id, localizacion_id)
 VALUES
-    ('Evento 1', 'Descripción del evento 1', 'http://localhost:8081/api/v0/media/logo.webp', '2022-01-01', 1, 45, 25, 1, 1),
-    ('Evento 2', 'Descripción del evento 2', 'http://localhost:8081/api/v0/media/logo.webp', '2022-01-02', 2, 78, 70, 2, 2),
-    ('Evento 3', 'Descripción del evento 3', 'http://localhost:8081/api/v0/media/logo.webp', '2022-01-03', 2, 89, 10, 3, 3);
+    ('Evento 1', 'Descripción del evento 1', 'http://localhost:8080/api/v0/media/logo.webp', '2022-01-01', 1, 45, 25, 1, 1),
+    ('Evento 2', 'Descripción del evento 2', 'http://localhost:8080/api/v0/media/logo.webp', '2022-01-02', 2, 78, 70, 2, 2),
+    ('Evento 3', 'Descripción del evento 3', 'http://localhost:8080/api/v0/media/logo.webp', '2022-01-03', 2, 89, 10, 3, 3);
 
 UNLOCK TABLES;
 

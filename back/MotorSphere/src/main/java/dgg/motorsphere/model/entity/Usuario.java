@@ -65,7 +65,7 @@ public class Usuario implements Serializable {
 
     // RELACIONES
 
-    @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "usuario")
     private Set<UsuarioInscritoEvento> usuarioInscritoEventos = new HashSet<>();
 
     // Etiquetas

@@ -5,7 +5,7 @@
                 <img [src]="profileImage" class="w-10 h-10 rounded-full" alt="">
                 <div class="font-medium dark:text-white">
                     @if (check) {
-                        <div>{{'@'+user.username+"verified"}}</div>
+                        <div>{{'@'+user.username+" ☑"}}</div>
                     } @else {
                         <div>{{'@'+user.username}}</div>
                     }
@@ -27,7 +27,7 @@
                         <span class="ms-3">Cambiar cuenta a Usuario</span>
                     </a>
                 </li>
-                @if (bidder.checker === false) {
+                @if (!check) {
                 <li>
                     <a (click)="verifyAccount()"
                         class="flex cursor-pointer items-center p-2 text-gray-900 rounded-lg hover:bg-gray-100">

@@ -17,6 +17,9 @@ export class DataService {
   private ofertante: BehaviorSubject<Bidder>;
   public ofertante$: Observable<Bidder>;
 
+  private fechas: BehaviorSubject<{ [key: number]: boolean }>
+  public fechas$: Observable<{ [key: number]: boolean }>
+
   constructor() {
     // Inicializa el BehaviorSubject con null o con un usuario inicial si lo tienes
     this.isBidder = new BehaviorSubject<boolean | null>(null);
@@ -27,6 +30,21 @@ export class DataService {
 
     this.ofertante = new BehaviorSubject<Bidder>(<Bidder>{});
     this.ofertante$ = this.ofertante.asObservable();
+
+    this.fechas = new BehaviorSubject<{ [key: number]: boolean }>(<{ [key: number]: boolean }>{})
+    this.fechas$ = this.fechas.asObservable();
+  }
+
+  getFechas() {
+    return this.fechas.value;
+  }
+
+  setFechas(array : { [key: number]: boolean }) {
+    this.fechas.next(array);
+  }
+
+  clearFechas(): void {
+    this.fechas.next(<{ [key: number]: boolean }>{});
   }
 
   // Método para obtener el valor actual del usuario
@@ -56,7 +74,7 @@ export class DataService {
 
   // Método para limpiar el usuario
   clearUser(): void {
-    this.user.next(<User>{});
+    this.user.next(<User>{id: 0});
   }
 
   // Método para obtener el valor actual del usuario

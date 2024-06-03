@@ -1,5 +1,7 @@
 package dgg.motorsphere.service.impl;
 
+import dgg.motorsphere.api.dto.IsSuscribedDTO;
+import dgg.motorsphere.api.dto.UsuarioEventoDTO;
 import dgg.motorsphere.api.dto.evento.CreateEventoDTO;
 import dgg.motorsphere.api.dto.evento.EventoDTO;
 import dgg.motorsphere.api.dto.FechasEventoDTO;
@@ -8,6 +10,7 @@ import dgg.motorsphere.api.dto.localizacion.LocalizacionDTO;
 import dgg.motorsphere.model.dao.*;
 import dgg.motorsphere.model.entity.*;
 import dgg.motorsphere.model.entity.relations.EtiquetaEvento;
+import dgg.motorsphere.model.entity.relations.UsuarioInscritoEvento;
 import dgg.motorsphere.service.IEvento;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
@@ -25,11 +28,15 @@ public class EventoImpl implements IEvento {
     @Autowired
     private OfertanteDAO ofertanteDAO;
     @Autowired
+    private UsuarioDAO usuarioDAO;
+    @Autowired
     private FechaDAO fechaDAO;
     @Autowired
     private InsigniaDAO insigniaDAO;
     @Autowired
     private LocalizacionDAO localizacionDAO;
+    @Autowired
+    private UsuarioInscritoEventoDAO usuarioInscritoEventoDAO;
 
     @Override
     public List<EventoDTO> getAll() {
@@ -121,6 +128,39 @@ public class EventoImpl implements IEvento {
     @Override
     public EventoDTO update(EventoDTO eventoDTO) {
         return null;
+    }
+
+    @Override
+    public UsuarioEventoDTO addUserToEvent(UsuarioEventoDTO usuarioEventoDTO){
+
+        UsuarioInscritoEvento usu = UsuarioInscritoEvento.builder()
+                .evento(eventoDAO.findById(usuarioEventoDTO.getEventId()).orElse(null))
+                .usuario(usuarioDAO.findById(usuarioEventoDTO.getUserId()).orElse(null))
+                .fechaInscripcion(new Date())
+                .fecha(fechaDAO.findById(usuarioEventoDTO.getFechaId()).orElse(null))
+                .build();
+
+        UsuarioInscritoEvento usuario = usuarioInscritoEventoDAO.save(usu);
+
+        return UsuarioEventoDTO.builder()
+                .userId(usuario.getUsuario().getId())
+                .eventId(usuario.getEvento().getId())
+                .incriptionDate(usuario.getFechaInscripcion())
+                .fechaId(usuario.getFecha().getId())
+                .build();
+    }
+
+    @Override
+    public List<Long> isSuscribed(IsSuscribedDTO isSuscribedDTO) {
+
+        List<UsuarioInscritoEvento> inscripciones = usuarioInscritoEventoDAO.findAllByUsuarioIdAndEventoId(isSuscribedDTO.getUserId(), isSuscribedDTO.getEventId());
+        List<Long> ids = new ArrayList<>();
+
+        for (UsuarioInscritoEvento usu : inscripciones){
+            ids.add(usu.getFecha().getId());
+        }
+
+        return ids;
     }
 
     @Override

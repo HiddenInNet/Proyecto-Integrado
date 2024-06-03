@@ -50,6 +50,12 @@ export class TabProfileComponent implements OnInit {
       this.user = data;
     });
 
+    this.dataService.ofertante$.subscribe((data) => {
+      this.bidder = data;
+    });
+
+    this.bidder ? (this.check = true) : (this.check = false);
+
     this.userService.getUserById(user_id).subscribe({
       next: (data) => {
         this.user = data;
@@ -63,8 +69,7 @@ export class TabProfileComponent implements OnInit {
             };
             reader.readAsDataURL(data);
           },
-          (error) => {
-          }
+          (error) => {}
         );
       },
     });
@@ -99,13 +104,12 @@ export class TabProfileComponent implements OnInit {
         .setChecker(this.bidder.id, !this.bidder.checker)
         .subscribe({
           next: (data) => {
-            this.bidder = this.bidder;
+            this.bidder = data;
+            this.dataService.setOfertante(data);
             this.check = data.checker;
           },
-          error: (err) => {
-          },
+          error: (err) => {},
         });
     }
   }
-
 }

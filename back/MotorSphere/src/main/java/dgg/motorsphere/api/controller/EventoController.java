@@ -1,5 +1,7 @@
 package dgg.motorsphere.api.controller;
 
+import dgg.motorsphere.api.dto.IsSuscribedDTO;
+import dgg.motorsphere.api.dto.UsuarioEventoDTO;
 import dgg.motorsphere.api.dto.evento.CreateEventoDTO;
 import dgg.motorsphere.api.dto.evento.EventoDTO;
 import dgg.motorsphere.model.entity.Evento;
@@ -37,6 +39,18 @@ public class EventoController {
     @PostMapping("/add")
     public ResponseEntity<?> addEvent(@RequestBody CreateEventoDTO createEventoDTO){
         EventoDTO response = eventoService.insert(createEventoDTO);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/add-user")
+    public ResponseEntity<?> addUserToEvent(@RequestBody UsuarioEventoDTO usuarioEventoDTO){
+        UsuarioEventoDTO response = eventoService.addUserToEvent(usuarioEventoDTO);
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PostMapping("/isSuscribed")
+    public ResponseEntity<?> isSuscribed(@RequestBody IsSuscribedDTO isSuscribedDTO) {
+        List<Long> response = eventoService.isSuscribed(isSuscribedDTO);
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

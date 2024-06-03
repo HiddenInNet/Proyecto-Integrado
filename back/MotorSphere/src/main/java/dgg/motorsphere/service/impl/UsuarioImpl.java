@@ -182,6 +182,16 @@ public class UsuarioImpl implements IUsuario {
 
             //Borrar usuario
             etiquetaUsuarioDAO.deleteByUsuarioId(id);
+
+            List<UsuarioInscritoEvento> usuarioInscritoEvento = (List<UsuarioInscritoEvento>) usuarioInscritoEventoDAO.findAll();
+
+            for (UsuarioInscritoEvento usuarioInscritoEvento1 : usuarioInscritoEvento){
+                assert usuario != null;
+                if (Objects.equals(usuarioInscritoEvento1.getUsuario().getId(), usuario.getId())) {
+                    usuarioInscritoEventoDAO.delete(usuarioInscritoEvento1);
+                }
+            }
+
             userDAO.deleteByUsername(usuario.getUser().getUsername());
             usuarioDAO.deleteById(id);
 
